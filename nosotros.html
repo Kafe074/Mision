@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia | Familia Filio Rojas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+        </div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="malasia.html">Malasia</a>
+            <a href="#apoyar" target="_blank" class="btn-nav">Apoyar</a>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Nuestra Historia</h1>
+        <p>Dos vidas unidas por un mismo propósito en el Sudeste Asiático.</p>
+    </section>
+
+    <section class="story-container">
+        
+        <div class="story-row">
+            <div class="story-image">
+                <img src="foto-pareja-1.jpg" alt="Familia Filio Rojas"> </div>
+            <div class="story-text">
+                <h2>Un mismo sentir</h2>
+                <p>Nuestra aventura no comenzó con un mapa, sino con una oración. Como matrimonio, entendimos que nuestra casa no son cuatro paredes, sino el lugar donde Dios nos llame a servir.</p>
+                <p>Malasia llegó a nuestros corazones como un desafío de amor: un país lleno de colores, diversidad y una necesidad profunda de conocer la Luz que nosotros hemos recibido.</p>
+            </div>
+        </div>
+
+        <div class="story-row reverse">
+            <div class="story-image">
+                <img src="foto-malasia-local.jpg" alt="Contexto Malasia"> </div>
+            <div class="story-text">
+                <h2>¿Por qué Malasia?</h2>
+                <p>Ubicada en el corazón de SE Asia, Malasia es un puente entre naciones. Nuestra meta es establecer relaciones auténticas, aprender la cultura local y reflejar el carácter de servicio que nos fue enseñado.</p>
+                <p>No buscamos solo "estar", buscamos "pertenecer" y amar a cada persona que Dios ponga en nuestro camino.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="mini-footer">
+        <p>&copy; 2026 Familia Filio Rojas | Luz en Malasia</p>
+    </footer>
+
+</body>
+
+<script>
+    (function() {
+        const session = localStorage.getItem("session_filio");
+        const ahora = new Date().getTime();
+        
+        // Si no hay sesión o si ya pasaron más de 24 horas, regresa al login
+        if (!session || ahora > session) {
+            localStorage.removeItem("session_filio");
+            window.location.href = "login.html";
+        }
+    })();
+</script>
+
+</html>

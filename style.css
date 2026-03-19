@@ -1,0 +1,549 @@
+/* Variables de Color */
+:root {
+    --verde-selva: #1B4332;
+    --dorado-luz: #D4AF37;
+    --crema-fondo: #F9F7F2;
+    --texto-oscuro: #2D2D2D;
+    --blanco: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--crema-fondo);
+    color: var(--texto-oscuro);
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: var(--blanco);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.8rem;
+    /* Un poco más grande */
+    letter-spacing: 4px;
+    /* Espaciado elegante */
+    color: var(--verde-selva);
+    text-transform: uppercase;
+}
+
+.logo span.en-italic {
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: lowercase;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0 5px;
+}
+
+.luz {
+    color: var(--dorado-luz);
+    font-weight: 700;
+}
+
+
+
+nav a {
+    text-decoration: none;
+    color: var(--texto-oscuro);
+    margin-left: 30px;
+    font-weight: 400;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--dorado-luz);
+}
+
+.btn-nav {
+    background: var(--verde-selva);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+}
+
+/* Hero Section */
+.hero {
+    height: 90vh;
+    background: url('https://images.unsplash.com/photo-1596422846543-75c6fc18a5cf?q=80&w=2070') center/cover;
+    /* Imagen temporal de Malasia */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: var(--blanco);
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(27, 67, 50, 0.5);
+    /* Filtro verde transparente */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    /* Más imponente */
+    line-height: 1.1;
+    font-weight: 600;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* Botones */
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: var(--dorado-luz);
+    color: white;
+}
+
+.btn-secondary {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    background: #b8972f;
+}
+
+/* Sección Frase */
+.quote-section {
+    padding: 80px 10%;
+    text-align: center;
+    background: var(--crema-fondo);
+}
+
+blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--verde-selva);
+}
+
+blockquote span {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    margin-top: 20px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Sección Nosotros */
+/* --- ESTILOS PÁGINA NOSOTROS --- */
+
+.page-header {
+    background-color: var(--verde-selva);
+    color: white;
+    padding: 80px 10%;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+.story-container {
+    padding: 60px 10%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.story-row {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 80px;
+}
+
+.story-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.story-image {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 15px;
+    /* Bordes suaves */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.story-image img {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s;
+}
+
+.story-image img:hover {
+    transform: scale(1.05);
+}
+
+.story-text {
+    flex: 1;
+}
+
+.story-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--verde-selva);
+    margin-bottom: 20px;
+}
+
+.story-text p {
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 1.1rem;
+}
+
+.mini-footer {
+    text-align: center;
+    padding: 40px;
+    background: #f1f1f1;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+
+    .story-row,
+    .story-row.reverse {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Sección Malasia */
+/* --- ESTILOS PÁGINA MALASIA --- */
+
+.dark-green {
+    background-color: #0d2b1e !important;
+    /* Un verde más profundo para Malasia */
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 10%;
+    background: var(--blanco);
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--dorado-luz);
+    margin-bottom: 5px;
+}
+
+.stat-item p {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.spiritual-context {
+    padding: 80px 10%;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    background: #fdfaf5;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.img-rounded {
+    border-radius: 50% 50% 0 0;
+    /* Forma de arco, muy común en arquitectura asiática */
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mission-focus {
+    padding: 80px 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.focus-card {
+    padding: 40px;
+    background: var(--verde-selva);
+    color: white;
+    border-radius: 10px;
+}
+
+.focus-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--dorado-luz);
+    margin-bottom: 20px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+
+    .content-wrapper,
+    .mission-focus,
+    .stats-grid {
+        flex-direction: column;
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- MAPA Y ORACIÓN PROFESIONAL --- */
+
+/* --- DISEÑO SIMÉTRICO: MAPA Y ORACIÓN --- */
+
+.mission-context-unified {
+    padding: 100px 8%;
+    background-color: var(--crema-fondo);
+}
+
+.unified-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Mitad y mitad exacto */
+    gap: 80px;
+    /* Espacio generoso entre las dos columnas */
+    max-width: 1200px;
+    margin: auto;
+    align-items: start;
+}
+
+.section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--verde-selva);
+    margin-bottom: 35px;
+    border-bottom: 1px solid var(--dorado-luz);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+/* Contenedor del Mapa */
+.map-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    border: 1px solid #ddd;
+}
+
+.caption-text {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #777;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Lista de Oración Profesional */
+.prayer-list-clean {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.p-item-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.p-item-row i {
+    color: var(--dorado-luz);
+    font-size: 1.4rem;
+    margin-top: 5px;
+}
+
+.p-text strong {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: var(--verde-selva);
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.p-text p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Responsivo para tablets y móviles */
+@media (max-width: 992px) {
+    .unified-container {
+        grid-template-columns: 1fr;
+        /* Se apilan en pantallas pequeñas */
+        gap: 50px;
+    }
+
+    .section-subtitle {
+        font-size: 2.2rem;
+    }
+}
+
+/* --- SECCIÓN ESTADÍSTICAS --- */
+.stats-section {
+    padding: 50px 10%;
+    background: #fff;
+    margin-top: -40px;
+    /* Eleva un poco la sección sobre el header */
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-card i {
+    color: var(--dorado-luz);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.stat-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--verde-selva);
+    margin-bottom: 5px;
+}
+
+.stat-card p {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+}
+
+/* --- CONTEXTO ESPIRITUAL V2 --- */
+.spiritual-context-v2 {
+    padding: 100px 10%;
+    background-color: #fff;
+}
+
+.spiritual-context-v2 .content-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.sub-label {
+    color: var(--dorado-luz);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.accent-line {
+    width: 60px;
+    height: 3px;
+    background: var(--dorado-luz);
+    margin: 20px 0;
+}
+
+.text-side h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--verde-selva);
+    margin-top: 10px;
+}
+
+.image-side .image-frame {
+    position: relative;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+}
+
+.image-side img {
+    width: 100%;
+    display: block;
+    filter: grayscale(20%);
+    transition: 0.5s;
+}
+
+.image-side img:hover {
+    filter: grayscale(0%);
+}
+
+/* Responsivo */
+@media (max-width: 992px) {
+    .stats-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .spiritual-context-v2 .content-wrapper {
+        grid-template-columns: 1fr;
+    }
+}

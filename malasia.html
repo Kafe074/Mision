@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Enfoque: El Pueblo Malayo | Familia Filio Rojas</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+        </div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="malasia.html">Malasia</a>
+            <a href="TU_LINK_AQUÍ" target="_blank" class="btn-nav">Apoyar</a>
+        </nav>
+    </header>
+
+    <section class="page-header dark-green">
+        <h1>El Enfoque Estratégico</h1>
+        <p>Alcanzando al pueblo malayo con el mensaje de esperanza.</p>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fa-solid fa-users"></i>
+                <h3>33.9M</h3>
+                <p>Habitantes en la Nación</p>
+            </div>
+            <div class="stat-card">
+                <i class="fa-solid fa-mosque"></i>
+                <h3>61.3%</h3>
+                <p>Población Musulmana</p>
+            </div>
+            <div class="stat-card">
+                <i class="fa-solid fa-earth-asia"></i>
+                <h3>130+</h3>
+                <p>Lenguas y Dialectos</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="spiritual-context-v2">
+        <div class="content-wrapper">
+            <div class="text-side">
+                <span class="sub-label">Nuestro Llamado</span>
+                <h2>El Corazón de nuestra Misión</h2>
+                <div class="accent-line"></div>
+                <p>Nuestra labor está enfocada específicamente en el <strong>pueblo malayo</strong>. Aunque Malasia es
+                    una nación multicultural, este grupo representa el núcleo de la identidad del país y, a su vez, uno
+                    de los desafíos misioneros más grandes del Sudeste Asiático.</p>
+                <p>Entendemos que para alcanzar al pueblo malayo es necesario un compromiso profundo con su lengua, sus
+                    costumbres y un respeto absoluto por su identidad. No vamos como extranjeros distantes, sino como
+                    <strong>servidores</strong> que buscan establecer puentes de confianza a través de la convivencia
+                    diaria y un evangelismo netamente relacional.
+                </p>
+            </div>
+            <div class="image-side">
+                <div class="image-frame">
+                    <img src="cultura-malasia.jpg" alt="Contexto Malayo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-context-unified">
+        <div class="unified-container">
+            <div class="map-professional-box">
+                <h2 class="section-subtitle">Ubicación Estratégica</h2>
+                <div class="map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254944.3854737274!2d101.55831518596647!3d3.1386751515568474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362abd07e359%3A0x75af60710af5456!2sKuala%20Lumpur%2C%20Territorio%20Federal%20de%20Kuala%20Lumpur%2C%20Malasia!5e0!3m2!1ses!2s!4v1709930000000!5m2!1ses!2s"
+                        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <p class="caption-text">Operando desde la capital para alcanzar al corazón de la nación.</p>
+            </div>
+
+            <div class="prayer-professional-box">
+                <h2 class="section-subtitle">Intercesión Especial</h2>
+                <div class="prayer-list-clean">
+                    <div class="p-item-row">
+                        <i class="fa-solid fa-hands-praying"></i>
+                        <div class="p-text">
+                            <strong>Corazones del Pueblo Malayo</strong>
+                            <p>Para que la semilla del Evangelio encuentre tierra fértil en las familias locales.</p>
+                        </div>
+                    </div>
+                    <div class="p-item-row">
+                        <i class="fa-solid fa-language"></i>
+                        <div class="p-text">
+                            <strong>Comunicación y Cultura</strong>
+                            <p>Gracia divina para dominar el Bahasa Melayu y conectar con su cosmovisión.</p>
+                        </div>
+                    </div>
+                    <div class="p-item-row">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div class="p-text">
+                            <strong>Sabiduría Estratégica</strong>
+                            <p>Prudencia y dirección del Espíritu para cada paso en el ministerio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mini-footer">
+        <p>© 2026 Familia Filio Rojas | Luz en Malasia</p>
+    </footer>
+
+</body>
+
+<script>
+    (function () {
+        const session = localStorage.getItem("session_filio");
+        const ahora = new Date().getTime();
+
+        // Si no hay sesión o si ya pasaron más de 24 horas, regresa al login
+        if (!session || ahora > session) {
+            localStorage.removeItem("session_filio");
+            window.location.href = "login.html";
+        }
+    })();
+</script>
+
+</html>
