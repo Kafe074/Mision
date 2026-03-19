@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luz en Malasia | Familia Filio Rojas</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+        </div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="malasia.html">Malasia</a>
+            <a href="#apoyar" target="_blank" class="btn-nav">Apoyar</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Una familia con un corazón para el Sudeste Asiático</h1>
+            <p>Acompaña a la familia Filio Rojas en su misión de compartir esperanza en Malasia.</p>
+            <div class="hero-buttons">
+                <a href="nosotros.html" class="btn-primary">Nuestra Historia</a>
+                <a href="malasia.html" class="btn-secondary">Motivos de Oración</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <blockquote>
+            "No vamos solos; vamos como una familia enviada por Su gracia."
+            <span>— Familia Filio Rojas</span>
+        </blockquote>
+    </section>
+
+</body>
+
+<script>
+    (function() {
+        const session = localStorage.getItem("session_filio");
+        const ahora = new Date().getTime();
+        
+        // Si no hay sesión o si ya pasaron más de 24 horas, regresa al login
+        if (!session || ahora > session) {
+            localStorage.removeItem("session_filio");
+            window.location.href = "login.html";
+        }
+    })();
+</script>
+
+</html>
