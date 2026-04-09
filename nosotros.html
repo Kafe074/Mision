@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Historia | Familia Filio Rojas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header>
@@ -22,29 +26,62 @@
     </header>
 
     <section class="page-header">
-        <h1>Nuestra Historia</h1>
-        <p>Dos vidas unidas por un mismo propósito en el Sudeste Asiático.</p>
+        <h1>La Misión</h1>
+        <p>«Porque la tierra estará llena del conocimiento de la gloria del Señor, como las aguas cubren el mar »</p>
+        <p style="font-weight: bold;">Habacuc 2:14</p>
     </section>
 
     <section class="story-container">
-        
-        <div class="story-row">
-            <div class="story-image">
-                <img src="foto-pareja-1.jpg" alt="Familia Filio Rojas"> </div>
+
+        <div class="story-row carrusel-mode" id="carrusel-nosotros">
+            <div class="story-image carrusel-container">
+                <div class="carrusel-track">
+                    <img src="photos/nosotros_1.jpeg" alt="nosotros 1">
+                    <img src="photos/nosotros_2.jpeg" alt="nosotros 2">
+                    <img src="photos/nosotros_3.jpeg" alt="nosotros 3">
+                </div>
+
+                <button class="carrusel-btn prev" onclick="controlCarrusel(this, -1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carrusel-btn next" onclick="controlCarrusel(this, 1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
             <div class="story-text">
                 <h2>Un mismo sentir</h2>
-                <p>Nuestra aventura no comenzó con un mapa, sino con una oración. Como matrimonio, entendimos que nuestra casa no son cuatro paredes, sino el lugar donde Dios nos llame a servir.</p>
-                <p>Malasia llegó a nuestros corazones como un desafío de amor: un país lleno de colores, diversidad y una necesidad profunda de conocer la Luz que nosotros hemos recibido.</p>
+                <p>Nuestra aventura no comenzó con un mapa, sino con una oración. Como matrimonio, entendimos que
+                    nuestra casa no son cuatro paredes, sino el lugar donde Dios nos llame a servir.</p>
+                <p>Malasia llegó a nuestros corazones como un desafío de amor: un país lleno de colores, diversidad y
+                    una necesidad profunda de conocer la Luz que nosotros hemos recibido.</p>
             </div>
         </div>
 
-        <div class="story-row reverse">
-            <div class="story-image">
-                <img src="foto-malasia-local.jpg" alt="Contexto Malasia"> </div>
+        <div class="story-row reverse carrusel-mode" id="carrusel-malasia">
+
+            <div class="story-image carrusel-container">
+
+                <div class="carrusel-track">
+                    <img src="photos/malasia_1.jpeg" alt="Malasia 1">
+                    <img src="photos/malasia_2.jpeg" alt="Malasia 2">
+                    <img src="photos/malasia_3.jpeg" alt="Malasia 3">
+                </div>
+
+                <button class="carrusel-btn prev" onclick="controlCarrusel(this, -1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carrusel-btn next" onclick="controlCarrusel(this, 1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
             <div class="story-text">
                 <h2>¿Por qué Malasia?</h2>
-                <p>Ubicada en el corazón de SE Asia, Malasia es un puente entre naciones. Nuestra meta es establecer relaciones auténticas, aprender la cultura local y reflejar el carácter de servicio que nos fue enseñado.</p>
-                <p>No buscamos solo "estar", buscamos "pertenecer" y amar a cada persona que Dios ponga en nuestro camino.</p>
+                <p>Ubicada en el corazón de SE Asia, Malasia es un puente entre naciones. Nuestra meta es establecer
+                    relaciones auténticas, aprender la cultura local y reflejar el carácter de servicio que nos fue
+                    enseñado.</p>
+                <p>No buscamos solo "estar", buscamos "pertenecer" y amar a cada persona que Dios ponga en nuestro
+                    camino.</p>
             </div>
         </div>
 
@@ -53,14 +90,14 @@
     <footer class="mini-footer">
         <p>&copy; 2026 Familia Filio Rojas | Luz en Malasia</p>
     </footer>
-
+    <script src="script.js"></script>
 </body>
 
 <script>
-    (function() {
+    (function () {
         const session = localStorage.getItem("session_filio");
         const ahora = new Date().getTime();
-        
+
         // Si no hay sesión o si ya pasaron más de 24 horas, regresa al login
         if (!session || ahora > session) {
             localStorage.removeItem("session_filio");

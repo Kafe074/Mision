@@ -21,20 +21,21 @@
             <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
         </div>
         <nav>
-            <a href="#inicio">Inicio</a>
+            <a href="index.html">Inicio</a>
             <a href="nosotros.html">Nosotros</a>
             <a href="malasia.html">Malasia</a>
             <a href="#apoyar" target="_blank" class="btn-nav">Apoyar</a>
         </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero"
+        style="background-image: linear-gradient(rgba(8, 28, 21, 0.5), rgba(8, 28, 21, 0.3)), url('photos/hero_familia.jpg');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Una familia con un corazón para el Sudeste Asiático</h1>
             <p>Acompaña a la familia Filio Rojas en su misión de compartir esperanza en Malasia.</p>
             <div class="hero-buttons">
-                <a href="nosotros.html" class="btn-primary">Nuestra Historia</a>
+                <a href="nosotros.html" class="btn-primary">Nuestra Misión</a>
                 <a href="malasia.html" class="btn-secondary">Motivos de Oración</a>
             </div>
         </div>
@@ -43,17 +44,42 @@
     <section class="quote-section">
         <blockquote>
             "No vamos solos; vamos como una familia enviada por Su gracia."
-            <span>— Familia Filio Rojas</span>
+            <span>— Familia Cusilayme Muñasqui</span>
         </blockquote>
+        <img src="photos/aaaaaaaa.png" alt="Familia Cusilayme Muñasqui">
     </section>
 
+    <section class="mission-video-section">
+        <div class="container">
+            <h2 class="section-subtitle">Nuestra Historia</h2>
+
+            <div class="verse-container">
+                <p class="bible-verse">
+                    "Pero recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en
+                    Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra."
+                </p>
+                <span class="verse-ref" style="font-size: 1rem;">Hechos 1:8</span>
+            </div>
+
+            <div class="video-wrapper">
+                <video controls poster="photos/LA DEFINITIVA.png">
+                    <source src="photos/Proyecto Sudeste Asiatico.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mini-footer">
+        <p>© 2026 Familia Filio Rojas | Luz en Malasia</p>
+    </footer>
 </body>
 
 <script>
-    (function() {
+    (function () {
         const session = localStorage.getItem("session_filio");
         const ahora = new Date().getTime();
-        
+
         // Si no hay sesión o si ya pasaron más de 24 horas, regresa al login
         if (!session || ahora > session) {
             localStorage.removeItem("session_filio");
