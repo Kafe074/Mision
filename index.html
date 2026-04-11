@@ -82,8 +82,8 @@
         const session = localStorage.getItem("session_filio");
         const ahora = new Date().getTime();
 
-        // Si no hay sesión o si ya pasaron más de 24 horas, regresa al login
-        if (!session || ahora > session) {
+        // Si no hay sesión o si ya pasaron los 15 minutos, regresa al login
+        if (!session || ahora > parseInt(session)) {
             localStorage.removeItem("session_filio");
             window.location.href = "login.html";
         }

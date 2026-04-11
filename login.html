@@ -99,34 +99,47 @@
         </div>
     </div>
 
-    async function validar() {
-    const pass = document.getElementById("passInput").value;
-    const errorMsg = document.getElementById("errorMsg");
+    <script>
+        async function validar() {
+            const pass = document.getElementById("passInput").value;
+            const errorMsg = document.getElementById("errorMsg");
 
-    async function hash(string) {
-    const utf8 = new Uint8Array(Array.from(string).map(c => c.charCodeAt(0)));
-    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
+            async function hash(string) {
+                const utf8 = new Uint8Array(Array.from(string).map(c => c.charCodeAt(0)));
+                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            }
 
-    const inputHash = await hash(pass);
+            const inputHash = await hash(pass);
 
-    // DICCIONARIO DE CLAVES ENCRIPTADAS (Invisibles al ojo humano)
-    const clavesAutorizadas = [
-    "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", // Admin 1
-    "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b", // Admin 2
-    /* PUBLIC_KEY */ "b811d4b543f5b4400f23c53d9aca8a43ecae5793faee3cb4fc2a004215347040"
-    ];
+            // DICCIONARIO DE CLAVES ENCRIPTADAS
+            const clavesAutorizadas = [
+                "6086f0853400a4980667da6724641c88825f38713291249b67323b6f0019448a", // Corresponde a: mision.luz.2026
+                "103328e35243171120092c20609355f37554f6551b88e146740b284898335032", // Corresponde a: familia.filio.asia
+            /* PUBLIC_KEY */ "b811d4b543f5b4400f23c53d9aca8a43ecae5793faee3cb4fc2a004215347040"
+            ];
 
-    if (clavesAutorizadas.includes(inputHash)) {
-    const expira = new Date().getTime() + (24 * 60 * 60 * 1000);
-    localStorage.setItem("session_filio", expira);
-    window.location.href = "index.html";
-    } else {
-    errorMsg.style.display = "block";
-    }
-    }
+            if (clavesAutorizadas.includes(inputHash)) {
+                // TIEMPO DE SESIÓN: 15 MINUTOS (15 min * 60 seg * 1000 ms)
+                const tiempoExpiracion = 15 * 60 * 1000;
+                const expira = new Date().getTime() + tiempoExpiracion;
+
+                localStorage.setItem("session_filio", expira);
+                window.location.href = "index.html";
+            } else {
+                errorMsg.style.display = "block";
+                errorMsg.innerText = "Clave incorrecta o caducada.";
+            }
+        }
+
+        // Permitir entrar con la tecla "Enter"
+        document.getElementById("passInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                validar();
+            }
+        });
+    </script>
 </body>
 
 </html>
