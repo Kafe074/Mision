@@ -99,22 +99,34 @@
         </div>
     </div>
 
-    <script>
-        function validar() {
-            const pass = document.getElementById("passInput").value;
-            // CLAVE DE TEMPORADA (Cámbiala aquí cada 3 meses)
-            const claveActual = "Malasia2026_Marzo";
+    async function validar() {
+    const pass = document.getElementById("passInput").value;
+    const errorMsg = document.getElementById("errorMsg");
 
-            if (pass === claveActual) {
-                // Crea una marca de tiempo para que la sesión dure, por ejemplo, 24 horas
-                const expira = new Date().getTime() + (24 * 60 * 60 * 1000);
-                localStorage.setItem("session_filio", expira);
-                window.location.href = "index.html";
-            } else {
-                document.getElementById("errorMsg").style.display = "block";
-            }
-        }
-    </script>
+    async function hash(string) {
+    const utf8 = new Uint8Array(Array.from(string).map(c => c.charCodeAt(0)));
+    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const inputHash = await hash(pass);
+
+    // DICCIONARIO DE CLAVES ENCRIPTADAS (Invisibles al ojo humano)
+    const clavesAutorizadas = [
+    "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", // Admin 1
+    "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b", // Admin 2
+    /* PUBLIC_KEY */ "d89196b05615822f6d0f507b9f3453b3790586e3f60570b2067750fa4712497d"
+    ];
+
+    if (clavesAutorizadas.includes(inputHash)) {
+    const expira = new Date().getTime() + (24 * 60 * 60 * 1000);
+    localStorage.setItem("session_filio", expira);
+    window.location.href = "index.html";
+    } else {
+    errorMsg.style.display = "block";
+    }
+    }
 </body>
 
 </html>
