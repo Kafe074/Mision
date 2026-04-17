@@ -121,8 +121,8 @@
             ];
 
             if (clavesAutorizadas.includes(inputHash)) {
-                // TIEMPO DE SESIÓN: 15 MINUTOS (15 min * 60 seg * 1000 ms)
-                const tiempoExpiracion = 15 * 60 * 1000;
+                // TIEMPO DE SESIÓN: 20 MINUTOS (20 min * 60 seg * 1000 ms)
+                const tiempoExpiracion = 20 * 60 * 1000;
                 const expira = new Date().getTime() + tiempoExpiracion;
 
                 localStorage.setItem("session_filio", expira);

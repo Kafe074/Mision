@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Historia | Familia Filio Rojas</title>
+    <title>Nuestra Historia | Familia Cusilayme Muñasqui</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="photos/favicon.png">
     <link rel="apple-touch-icon" href="photos/favicon.png">
     <link rel="stylesheet" href="style.css">
@@ -19,11 +20,16 @@
         <div class="logo">
             <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
         </div>
-        <nav>
+
+        <button class="menu-toggle" id="mobile-menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav id="nav-menu">
             <a href="index.html">Inicio</a>
             <a href="nosotros.html">Nosotros</a>
             <a href="malasia.html">Malasia</a>
-            <a href="#apoyar" target="_blank" class="btn-nav">Apoyar</a>
+            <a href="https://www.purecharity.com/checkout/603636" target="_blank" class="btn-nav">Apoyar</a>
         </nav>
     </header>
 
@@ -90,22 +96,34 @@
     </section>
 
     <footer class="mini-footer">
-        <p>&copy; 2026 Familia Filio Rojas | Luz en Malasia</p>
+        <p>&copy; 2026 Familia Cusilayme Muñasqui | Luz en Malasia</p>
     </footer>
     <script src="script.js"></script>
 </body>
 
 <script>
+    // 1. Control de Sesión
     (function () {
         const session = localStorage.getItem("session_filio");
         const ahora = new Date().getTime();
-
-        // Si no hay sesión o si ya pasaron los 15 minutos, regresa al login
         if (!session || ahora > parseInt(session)) {
             localStorage.removeItem("session_filio");
             window.location.href = "login.html";
         }
     })();
+
+    // 2. Control de Menú Móvil
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (mobileMenu && navMenu) { // Verificamos que existan para evitar errores
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+    }
 </script>
 
 </html>

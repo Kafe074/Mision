@@ -551,28 +551,37 @@ blockquote span {
 /* --- ESTILOS ESPECÍFICOS DEL CARRUSEL --- */
 
 .carrusel-mode {
-    align-items: center; /* Centra verticalmente el texto y el carrusel */
+    align-items: center;
+    /* Centra verticalmente el texto y el carrusel */
 }
 
 .carrusel-container {
     position: relative;
-    overflow: hidden; /* Oculta las fotos que no se están viendo */
-    border-radius: 12px; /* Mismo borde suave que el resto del diseño */
+    overflow: hidden;
+    /* Oculta las fotos que no se están viendo */
+    border-radius: 12px;
+    /* Mismo borde suave que el resto del diseño */
     border: 1px solid #ddd;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .carrusel-track {
-    display: flex; /* Alinea las fotos una al lado de la otra */
-    transition: transform 0.5s ease-in-out; /* Animación suave al cambiar */
-    width: 300%; /* Si son 3 fotos, el ancho total es 300% */
+    display: flex;
+    /* Alinea las fotos una al lado de la otra */
+    transition: transform 0.5s ease-in-out;
+    /* Animación suave al cambiar */
+    width: 300%;
+    /* Si son 3 fotos, el ancho total es 300% */
 }
 
 .carrusel-track img {
-    width: 33.33%; /* Cada foto ocupa 1/3 del ancho total (un contenedor completo) */
+    width: 33.33%;
+    /* Cada foto ocupa 1/3 del ancho total (un contenedor completo) */
     display: block;
-    object-fit: cover; /* Asegura que la foto llene el espacio sin deformarse */
-    height: 400px; /* Ajusta la altura para que coincida con el bloque estático */
+    object-fit: cover;
+    /* Asegura que la foto llene el espacio sin deformarse */
+    height: 400px;
+    /* Ajusta la altura para que coincida con el bloque estático */
 }
 
 /* Botones de Navegación */
@@ -580,25 +589,33 @@ blockquote span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(27, 67, 50, 0.7); /* Verde Selva con transparencia */
+    background: rgba(27, 67, 50, 0.7);
+    /* Verde Selva con transparencia */
     color: white;
     border: none;
     padding: 15px;
     cursor: pointer;
-    border-radius: 50%; /* Botones circulares */
+    border-radius: 50%;
+    /* Botones circulares */
     font-size: 1.2rem;
     transition: 0.3s;
     z-index: 10;
 }
 
 .carrusel-btn:hover {
-    background: var(--dorado-luz); /* Cambia al dorado al pasar el ratón */
+    background: var(--dorado-luz);
+    /* Cambia al dorado al pasar el ratón */
     color: #fff;
 }
 
-.carrusel-btn.prev { left: 15px; }
-.carrusel-btn.next { right: 15px; }
- 
+.carrusel-btn.prev {
+    left: 15px;
+}
+
+.carrusel-btn.next {
+    right: 15px;
+}
+
 
 /* --- SECCIÓN VIDEO Y VERSÍCULO --- */
 /* --- AJUSTE FOTO EN SECCIÓN FRASE --- */
@@ -613,10 +630,12 @@ blockquote span {
 }
 
 .quote-section img {
-    width: 500px; /* Tamaño controlado */
+    width: 500px;
+    /* Tamaño controlado */
     height: 500px;
     object-fit: cover;
-    border-radius: 50%; /* Foto circular más moderna */
+    border-radius: 50%;
+    /* Foto circular más moderna */
     border: 5px solid white;
     box-shadow: var(--sombra-verde);
     transition: transform 0.3s ease;
@@ -657,11 +676,14 @@ blockquote span {
 /* Contenedor de Video Ultra-Moderno */
 .video-wrapper {
     position: relative;
-    background: transparent; /* Adiós al fondo blanco */
-    padding: 0; /* Adiós al marco */
-    border-radius: 24px; /* Bordes redondeados modernos */
-    box-shadow: 0 30px 60px -12px rgba(8, 28, 21, 0.2), 
-                0 18px 36px -18px rgba(0, 0, 0, 0.3);
+    background: transparent;
+    /* Adiós al fondo blanco */
+    padding: 0;
+    /* Adiós al marco */
+    border-radius: 24px;
+    /* Bordes redondeados modernos */
+    box-shadow: 0 30px 60px -12px rgba(8, 28, 21, 0.2),
+        0 18px 36px -18px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     max-width: 900px;
     margin: 0 auto;
@@ -670,7 +692,8 @@ blockquote span {
 }
 
 .video-wrapper:hover {
-    transform: translateY(-5px); /* Pequeña elevación al pasar el mouse */
+    transform: translateY(-5px);
+    /* Pequeña elevación al pasar el mouse */
 }
 
 .video-wrapper video {
@@ -679,19 +702,153 @@ blockquote span {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     /* Eliminamos el borde del video para que use el del contenedor */
-    border-radius: 24px; 
+    border-radius: 24px;
 }
 
 /* Ajuste responsivo */
 @media (max-width: 768px) {
-    .video-wrapper, .video-wrapper video {
+
+    .video-wrapper,
+    .video-wrapper video {
         border-radius: 16px;
     }
+
     .bible-verse {
         font-size: 1.2rem;
     }
+
     .quote-section img {
         width: 150px;
         height: 150px;
+    }
+}
+
+/* Estilos base para el botón (oculto en desktop) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #D4AF37;
+    /* El dorado de tu identidad */
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* Responsivo para Móviles */
+@media (max-width: 768px) {
+
+    @media (max-width: 768px) {
+
+        /* Ajuste del Hero para que no ocupe tanto espacio y se lea bien */
+        .hero h1 {
+            font-size: 2.5rem;
+            /* Reducimos de 4.5rem a 2.5rem */
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
+
+        /* Ajuste de la foto circular de la frase (estaba muy grande para móvil) */
+        .quote-section img {
+            width: 250px;
+            /* Tamaño adecuado para pantallas pequeñas */
+            height: 250px;
+        }
+
+        blockquote {
+            font-size: 1.4rem;
+            /* Texto de la frase más pequeño */
+        }
+
+        /* Ajuste de los títulos de secciones */
+        .page-header h1 {
+            font-size: 2.2rem;
+        }
+
+        .story-text h2 {
+            font-size: 1.8rem;
+        }
+
+        /* Ajuste del carrusel/mapa para que las fotos no se vean cortadas */
+        .carrusel-track img {
+            height: 250px;
+            /* Menos altura en móvil */
+        }
+
+        /* Estadísticas: menos tamaño para que quepan en pantalla */
+        .stat-item h3,
+        .stat-card h3 {
+            font-size: 2rem;
+        }
+
+        /* Padding general para que el contenido no toque los bordes */
+        header {
+            padding: 15px 5%;
+        }
+    }
+
+    .menu-toggle {
+        display: block;
+        /* Mostrar botón */
+    }
+
+    nav {
+        display: none;
+        /* Ocultar enlaces por defecto */
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        /* Ajusta según el alto de tu header */
+        left: 0;
+        width: 100%;
+        background-color: #1B4332;
+        /* Tu verde oscuro */
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    nav.active {
+        display: flex;
+        /* Mostrar cuando se haga clic */
+    }
+
+    nav a {
+        margin: 15px 0;
+        width: 100%;
+        color: var(--blanco) !important;
+        /* Color claro para legibilidad */
+        margin-left: 0;
+        /* Quitamos el margen de 30px que traía de desktop */
+        font-size: 1.1rem;
+        display: block;
+    }
+
+    .btn-nav {
+        margin: 10px auto !important;
+        display: inline-block;
+        padding: 10px 30px;
+    }
+
+    @media (max-width: 480px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            /* Botones uno sobre otro */
+            gap: 5px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            width: 100%;
+            margin: 5px 0;
+        }
     }
 }
