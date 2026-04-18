@@ -96,8 +96,8 @@
 
         <div style="margin-top: 20px; border-top: 1px solid #eee; pt: 20px;">
             <p style="margin-bottom: 10px;">¿No tienes una clave?</p>
-            <button onclick="window.location.href='registro.html'" 
-                    style="background: transparent; color: #1B4332; border: 2px solid #1B4332; padding: 10px 20px;">
+            <button onclick="window.location.href='registro.html'"
+                style="background: transparent; color: #1B4332; border: 2px solid #1B4332; padding: 10px 20px;">
                 Solicitar Acceso
             </button>
         </div>
@@ -109,27 +109,25 @@
 
     <script>
         async function validar() {
-            const pass = document.getElementById("passInput").value.trim().toLowerCase();
+            // .trim() es vital para que no falle si el usuario pone un espacio al final
+            const pass = document.getElementById("passInput").value.trim();
             const errorMsg = document.getElementById("errorMsg");
 
             async function hash(string) {
-                const utf8 = new Uint8Array(Array.from(string).map(c => c.charCodeAt(0)));
-                const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+                // Usamos TextEncoder, que es el estándar moderno para evitar errores de codificación
+                const msgUint8 = new TextEncoder().encode(string);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
                 const hashArray = Array.from(new Uint8Array(hashBuffer));
                 return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
             }
 
             const inputHash = await hash(pass);
 
-            // DICCIONARIO DE CLAVES ENCRIPTADAS
             const clavesAutorizadas = [
-                "6086f0853400a4980667da6724641c88825f38713291249b67323b6f0019448a", // Corresponde a: mision.luz.2026
-                "103328e35243171120092c20609355f37554f6551b88e146740b284898335032", // Corresponde a: familia.filio.asia
             /* PUBLIC_KEY */ "f807a272adecf06827e158bf9f732c17159a50cbee7efe82492a16e306176d68"
             ];
 
             if (clavesAutorizadas.includes(inputHash)) {
-                // TIEMPO DE SESIÓN: 20 MINUTOS (20 min * 60 seg * 1000 ms)
                 const tiempoExpiracion = 20 * 60 * 1000;
                 const expira = new Date().getTime() + tiempoExpiracion;
 
