@@ -1,0 +1,17 @@
+name: Recordatorio de Limpieza
+on:
+  schedule:
+    - cron: '0 9 28-31 * *' # Se ejecuta los últimos días del mes a las 9:00 AM
+  workflow_dispatch:
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar Recordatorio
+        run: |
+          # Este script solo corre si mañana es día 1
+          if [ $(date -d "tomorrow" +%d) -eq 1 ]; then
+            curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.CHAT_ID }}&parse_mode=Markdown&text=⚠️ *RECORDATORIO DE LIMPIEZA*%0A%0AMañana es día 1 y se rotará la clave automáticamente.%0A%0APor favor, ingresa al Panel de Administración y elimina a las personas que ya no apoyan la misión para que no reciban la nueva clave.%0A%0A[Ir al Panel](https://tu-web.com/admin.html)"
+          fi
