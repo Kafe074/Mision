@@ -17,12 +17,14 @@ jobs:
           python-version: '3.x'
 
       - name: Instalar dependencias
-        run: pip install requests
+        run: |
+          pip install requests firebase-admin
 
       - name: Ejecutar script de rotacion
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: python scripts/rotate_keys.py
 
       - name: Guardar cambios en la web
