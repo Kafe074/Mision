@@ -109,7 +109,7 @@
 
     <script>
         async function validar() {
-            const pass = document.getElementById("passInput").value;
+            const pass = document.getElementById("passInput").value.trim().toLowerCase();
             const errorMsg = document.getElementById("errorMsg");
 
             async function hash(string) {
