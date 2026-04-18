@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Acceso</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="photos/favicon.png">
+    <link rel="apple-touch-icon" href="photos/favicon.png">
+    <style>
+        /* Estilos específicos para centrar el formulario de registro */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: var(--crema-fondo);
+        }
+
+        .register-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .register-box {
+            background: var(--blanco);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .register-box h2 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--verde-selva);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .register-box p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .register-box input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+        }
+
+        .register-box input:focus {
+            border-color: var(--dorado-luz);
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--verde-selva);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-register:hover {
+            background-color: #1b4332;
+            transform: translateY(-2px);
+        }
+
+        .link-back {
+            display: block;
+            margin-top: 20px;
+            color: var(--dorado-luz);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        #msg {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-container">
+        <div class="register-box">
+            <h2>Solicitar Acceso</h2>
+            <p>Completa tus datos para recibir la clave de acceso en tu correo tras la aprobación del administrador.</p>
+
+            <input type="text" id="regNombre" placeholder="Nombre completo" required>
+            <input type="tel" id="regTelefono" placeholder="WhatsApp / Teléfono" required>
+            <input type="email" id="regCorreo" placeholder="Correo electrónico" required>
+
+            <button class="btn-register" onclick="enviarSolicitud()">Enviar Solicitud</button>
+
+            <div id="msg"></div>
+
+            <a href="login.html" class="link-back">Ya tengo acceso - Ir al Inicio</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // TU CONFIGURACIÓN (Reemplaza con tus datos de Firebase)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAHvLHGr4pXiXhiWhEJegW6nJUlWxiVfA",
+            authDomain: "sudesteasiatico-5a1d2.firebaseapp.com",
+            projectId: "sudesteasiatico-5a1d2",
+            storageBucket: "sudesteasiatico-5a1d2.firebasestorage.app",
+            messagingSenderId: "88193105907",
+            appId: "1:88193105907:web:ba8953331fec95abd6dc86"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.enviarSolicitud = async () => {
+            const nombre = document.getElementById("regNombre").value;
+            const telefono = document.getElementById("regTelefono").value;
+            const correo = document.getElementById("regCorreo").value;
+            const msgDiv = document.getElementById("msg");
+
+            if (!nombre || !telefono || !correo) {
+                msgDiv.style.display = "block";
+                msgDiv.style.color = "red";
+                msgDiv.innerText = "Por favor, completa todos los campos.";
+                return;
+            }
+
+            try {
+                // Guardamos en la colección 'solicitudes' que preparamos en la BD
+                await addDoc(collection(db, "solicitudes"), {
+                    nombre: nombre,
+                    telefono: telefono,
+                    correo: correo.toLowerCase().trim(),
+                    estado: "pendiente",
+                    fecha: new Date().toISOString()
+                });
+
+                msgDiv.style.display = "block";
+                msgDiv.style.color = "green";
+                msgDiv.innerText = "¡Solicitud enviada con éxito! Revisa tu correo pronto.";
+
+                // Limpiar campos
+                document.getElementById("regNombre").value = "";
+                document.getElementById("regTelefono").value = "";
+                document.getElementById("regCorreo").value = "";
+
+            } catch (e) {
+                console.error("Error al enviar solicitud: ", e);
+                msgDiv.style.display = "block";
+                msgDiv.style.color = "red";
+                msgDiv.innerText = "Hubo un error. Intenta más tarde.";
+            }
+        };
+    </script>
+</body>
+
+</html>

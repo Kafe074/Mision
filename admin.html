@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Aprobación - Luz en Malasia</title>
+    <style>
+        :root { --verde: #1B4332; --dorado: #D4AF37; }
+        body { font-family: 'Montserrat', sans-serif; background: #f9f7f2; padding: 20px; color: #333; }
+        h1 { font-family: 'Cormorant Garamond', serif; color: var(--verde); text-align: center; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { 
+            background: white; padding: 20px; margin-bottom: 15px; 
+            border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            display: flex; justify-content: space-between; align-items: center;
+            border-left: 5px solid var(--dorado);
+        }
+        .info strong { font-size: 1.1rem; color: var(--verde); }
+        .info p { margin: 5px 0; font-size: 0.9rem; color: #666; }
+        button { 
+            background: var(--verde); color: white; border: none; 
+            padding: 12px 20px; border-radius: 50px; cursor: pointer; 
+            font-weight: bold; transition: 0.3s;
+        }
+        button:hover { background: var(--dorado); transform: scale(1.05); }
+        .empty { text-align: center; padding: 40px; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Solicitudes de Acceso</h1>
+        <div id="lista-solicitudes">Cargando solicitudes...</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Reemplaza con tus credenciales reales
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAHvLHGr4pXiXhiWhEJegW6nJUlWxiVfA",
+            authDomain: "sudesteasiatico-5a1d2.firebaseapp.com",
+            projectId: "sudesteasiatico-5a1d2",
+            storageBucket: "sudesteasiatico-5a1d2.firebasestorage.app",
+            messagingSenderId: "88193105907",
+            appId: "1:88193105907:web:ba8953331fec95abd6dc86"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function cargarSolicitudes() {
+            try {
+                const q = query(collection(db, "solicitudes"), where("estado", "==", "pendiente"));
+                const querySnapshot = await getDocs(q);
+                const contenedor = document.getElementById("lista-solicitudes");
+                contenedor.innerHTML = "";
+
+                if (querySnapshot.empty) {
+                    contenedor.innerHTML = "<p class='empty'>No hay solicitudes pendientes por ahora.</p>";
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const user = docSnap.data();
+                    const div = document.createElement("div");
+                    div.className = "card";
+                    div.innerHTML = `
+                        <div class="info">
+                            <strong>${user.nombre}</strong>
+                            <p>📧 ${user.correo}</p>
+                            <p>📱 ${user.telefono}</p>
+                        </div>
+                        <button onclick="aprobar('${docSnap.id}', '${user.correo}', '${user.nombre}')">Aprobar Acceso</button>
+                    `;
+                    contenedor.appendChild(div);
+                });
+            } catch (error) {
+                console.error("Error cargando:", error);
+            }
+        }
+
+        // Importante: Asignar a window para que el botón HTML pueda ver la función
+        window.aprobar = async (id, correo, nombre) => {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerText = "Procesando...";
+
+            try {
+                // 1. Obtener clave mensual de Firestore
+                const configSnap = await getDoc(doc(db, "config", "acceso"));
+                const claveActual = configSnap.exists() ? configSnap.data().clave_mensual : "Mision2026";
+
+                // 2. Crear documento para Trigger Email
+                await addDoc(collection(db, "correos_enviados"), {
+                    to: correo,
+                    message: {
+                        subject: "🔑 Tu acceso a Luz en el Sudeste Asiático",
+                        html: `
+                            <div style="font-family: sans-serif; color: #333;">
+                                <h2 style="color: #1B4332;">¡Hola ${nombre}!</h2>
+                                <p>Tu solicitud ha sido aprobada con éxito.</p>
+                                <div style="background: #f9f7f2; padding: 20px; border-radius: 10px; border: 1px solid #D4AF37; text-align: center;">
+                                    <p style="margin: 0; font-size: 14px;">La clave de acceso para este mes es:</p>
+                                    <h2 style="color: #1B4332; letter-spacing: 2px;">${claveActual}</h2>
+                                </div>
+                                <p>Puedes ingresar aquí: <a href="https://tudominio.com/login.html">Link de Acceso</a></p>
+                                <p style="font-size: 12px; color: #999;">Dios te bendiga.</p>
+                            </div>
+                        `
+                    }
+                });
+
+                // 3. Marcar como aprobado en Firestore
+                await updateDoc(doc(db, "solicitudes", id), { estado: "aprobado" });
+
+                alert("¡Usuario aprobado! El correo está en camino.");
+                cargarSolicitudes();
+            } catch (e) {
+                console.error(e);
+                alert("Error al procesar la aprobación.");
+                btn.disabled = false;
+                btn.innerText = "Aprobar Acceso";
+            }
+        };
+
+        cargarSolicitudes();
+    </script>
+</body>
+</html>
