@@ -10,8 +10,20 @@ jobs:
     steps:
       - name: Ejecutar Recordatorio
         run: |
-          # Este script solo corre si mañana es día 1
-          if [ $(date -d "tomorrow" +%d) -eq 1 ]; then
+          # Configuramos la zona horaria para que coincida con la tuya (Ejemplo: Lima/Bogota)
+          # Esto asegura que "mañana" se calcule correctamente según tu calendario
+          export TZ="America/Lima" 
+          
+          TOMORROW_DAY=$(date -d "tomorrow" +%d)
+          
+          echo "Hoy es $(date), mañana es el día: $TOMORROW_DAY"
+          
+          if [ "$TOMORROW_DAY" -eq "1" ] || [ "$TOMORROW_DAY" -eq "01" ]; then
+            echo "Enviando notificación..."
             curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.CHAT_ID }}&parse_mode=Markdown&text=⚠️ *RECORDATORIO DE LIMPIEZA*%0A%0AMañana es día 1 y se rotará la clave automáticamente.%0A%0APor favor, ingresa al Panel de Administración y elimina a las personas que ya no apoyan la misión para que no reciban la nueva clave.%0A%0A[Ir al Panel](https://tu-web.com/admin.html)"
+            -d "chat_id=${{ secrets.CHAT_ID }}" \
+            -d "parse_mode=Markdown" \
+            -d "text=⚠️ *RECORDATORIO DE LIMPIEZA*%0A%0AMañana es día 1 y se rotará la clave automáticamente.%0A%0APor favor, ingresa al Panel de Administración y elimina a las personas que ya no apoyan la misión.%0A%0A[Ir al Panel](https://familiacusilaymeenmision.vercel.app/admin.html)"
+          else
+            echo "No es el último día del mes. No se envía nada."
           fi
