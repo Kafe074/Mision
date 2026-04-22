@@ -4,17 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control | Luz en el Sudeste Asiático</title>
+    <title>Panel de Control | Luz en Malasia</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="photos/favicon.png">
-    <link rel="apple-touch-icon" href="photos/favicon.png">
     <style>
         :root {
             --verde: #1B4332;
+            --verde-claro: #2d6a4f;
             --dorado: #D4AF37;
             --crema: #f9f7f2;
+            --blanco: #ffffff;
         }
 
         body {
@@ -50,7 +52,6 @@
             border-top: 5px solid var(--dorado);
         }
 
-        /* Main Layout */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -72,15 +73,15 @@
         .section-title {
             border-bottom: 2px solid var(--dorado);
             display: inline-block;
-            margin-bottom: 20px;
+            margin: 40px 0 20px 0;
             padding-right: 20px;
         }
 
-        /* Cards & Lists */
+        /* Grid y Cards para Usuarios */
         .grid {
             display: grid;
             gap: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
         }
 
         .card {
@@ -93,46 +94,105 @@
             align-items: center;
         }
 
-        .info strong {
-            color: var(--verde);
+        /* --- FORMULARIO DE NOTICIAS --- */
+        .form-noticia {
+            background: var(--blanco);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
             display: block;
-            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--verde);
+            font-size: 0.9rem;
         }
 
-        .info span {
-            font-size: 0.85rem;
-            color: #666;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
-        /* Buttons */
-        input {
+        input[type="text"],
+        input[type="password"],
+        textarea,
+        select {
+            width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 100%;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
             box-sizing: border-box;
+            transition: border 0.3s;
         }
 
+        input:focus,
+        textarea:focus {
+            border-color: var(--dorado);
+            outline: none;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .file-input-wrapper {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .file-input-wrapper:hover {
+            border-color: var(--dorado);
+            background: #fffcf5;
+        }
+
+        #preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Botones */
         button {
             background: var(--verde);
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 14px 25px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
-            font-size: 0.9rem;
+            width: 100%;
         }
 
-        button:hover {
+        button:hover:not(:disabled) {
             background: var(--dorado);
             transform: translateY(-2px);
         }
 
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
         .btn-danger {
             background: #c0392b;
+            width: auto;
         }
 
         .btn-danger:hover {
@@ -140,10 +200,13 @@
         }
 
         @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
             .card {
                 flex-direction: column;
                 text-align: center;
-                gap: 15px;
             }
         }
     </style>
@@ -153,29 +216,79 @@
 
     <div id="login-overlay">
         <div class="login-card">
+            <i class="fas fa-user-shield" style="font-size: 2rem; color: var(--dorado); margin-bottom: 15px;"></i>
             <h2>Panel Administrativo</h2>
-            <p>Ingresa la contraseña maestra</p>
+            <p>Ingresa tus credenciales de acceso</p>
+            <input type="text" id="adminEmail" placeholder="Correo electrónico" style="margin-bottom: 10px;">
             <input type="password" id="adminPass" placeholder="Contraseña">
-            <button onclick="verificarAdmin()">Entrar</button>
+            <button onclick="verificarAdmin()" id="btnLogin">Entrar al Panel</button>
         </div>
     </div>
 
     <div class="container" id="adminContent">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div style="letter-spacing: 3px; color: var(--dorado); font-weight: bold;">LUZ EN EL SUDESTE ASIÁTICO</div>
+        <div style="text-align: right; margin-bottom: -20px;">
+            <button onclick="cerrarSesion()" class="btn-danger" style="padding: 8px 15px; font-size: 0.8rem;">Cerrar
+                Sesión</button>
         </div>
-        <h1>Gestión de Misión</h1>
 
-        <h2 class="section-title">Solicitudes Pendientes</h2>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="letter-spacing: 3px; color: var(--dorado); font-weight: bold;">LUZ EN MALASIA</div>
+        </div>
+        <h1>Gestión de la Misión</h1>
+
+        <h2 class="section-title"><i class="fas fa-paper-plane"></i> Nueva Publicación</h2>
+        <div class="form-noticia">
+            <div class="form-group">
+                <label>Título de la Noticia *</label>
+                <input type="text" id="noticiaTitulo" placeholder="Ej: Avances en la enseñanza...">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ubicación (Opcional)</label>
+                    <input type="text" id="noticiaUbicacion" placeholder="Ej: Kuala Lumpur">
+                </div>
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select id="noticiaCategoria">
+                        <option value="Misión">Misión</option>
+                        <option value="Familia">Familia</option>
+                        <option value="Oración">Petición de Oración</option>
+                        <option value="Logro">Meta Alcanzada</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Relato de la Noticia *</label>
+                <textarea id="noticiaContenido" placeholder="Escribe aquí los detalles..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Foto de la Misión</label>
+                <div class="file-input-wrapper" onclick="document.getElementById('noticiaFoto').click()">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 1.5rem; color: #aaa;"></i>
+                    <p id="file-name">Haz clic para subir una imagen</p>
+                    <img id="preview-img">
+                </div>
+                <input type="file" id="noticiaFoto" accept="image/*" style="display: none;" onchange="previewFile()">
+            </div>
+
+            <button onclick="publicarConFoto()" id="btnPublicar">Publicar en la Bitácora</button>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-user-clock"></i> Solicitudes Pendientes</h2>
         <div id="lista-pendientes" class="grid">Cargando...</div>
 
-        <h2 class="section-title">Usuarios con Acceso</h2>
+        <h2 class="section-title"><i class="fas fa-users"></i> Usuarios con Acceso</h2>
         <div id="lista-aprobados" class="grid">Cargando...</div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCAHvLHGr4pXiXhiWhEJegW6nJUlWxiVfA",
@@ -188,30 +301,108 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const storage = getStorage(app);
+        const auth = getAuth(app);
 
-        // --- SEGURIDAD ---
-        window.verificarAdmin = async () => {
-            const pass = document.getElementById("adminPass").value.trim();
+        // --- 1. GESTIÓN DE SESIÓN REAL ---
 
-            // Generamos el hash SHA-256
-            const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
-            const inputHash = Array.from(new Uint8Array(hashBuffer))
-                .map(b => b.toString(16).padStart(2, '0'))
-                .join('');
-
-            // Única contraseña autorizada: FilioRojas1917
-            const hashMaestro = "5571f3c746c7ac2f33ed941b5af96e2a8ff83357fa95b13084e99d5f99eda979";
-
-            if (inputHash === hashMaestro) {
+        // Observador de estado: Verifica si ya estabas logueado
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
                 document.getElementById("login-overlay").style.display = "none";
                 document.getElementById("adminContent").style.display = "block";
                 cargarDatos();
             } else {
-                alert("Contraseña administrativa incorrecta");
+                document.getElementById("login-overlay").style.display = "flex";
+                document.getElementById("adminContent").style.display = "none";
+            }
+        });
+
+        window.verificarAdmin = async () => {
+            const email = document.getElementById("adminEmail").value.trim();
+            const pass = document.getElementById("adminPass").value.trim();
+            const btn = document.getElementById("btnLogin");
+
+            if (!email || !pass) return alert("Ingresa correo y contraseña");
+
+            btn.disabled = true;
+            btn.innerText = "Verificando...";
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                // El observador onAuthStateChanged se encargará de mostrar el contenido
+            } catch (e) {
+                console.error(e);
+                alert("Error: Usuario o contraseña incorrectos.");
+                btn.disabled = false;
+                btn.innerText = "Entrar al Panel";
             }
         };
 
-        // --- CARGAR DATOS ---
+        window.cerrarSesion = () => {
+            signOut(auth).then(() => location.reload());
+        };
+
+        // --- 2. FUNCIONES DE PUBLICACIÓN ---
+
+        window.previewFile = () => {
+            const file = document.getElementById('noticiaFoto').files[0];
+            const preview = document.getElementById('preview-img');
+            const fileName = document.getElementById('file-name');
+
+            if (file) {
+                fileName.innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        window.publicarConFoto = async () => {
+            const titulo = document.getElementById("noticiaTitulo").value;
+            const contenido = document.getElementById("noticiaContenido").value;
+            const ubicacion = document.getElementById("noticiaUbicacion").value;
+            const categoria = document.getElementById("noticiaCategoria").value;
+            const fotoFile = document.getElementById("noticiaFoto").files[0];
+            const btn = document.getElementById("btnPublicar");
+
+            if (!titulo || !contenido) return alert("Por favor, llena los campos obligatorios (*)");
+
+            btn.disabled = true;
+            btn.innerText = "Subiendo publicación...";
+
+            try {
+                let urlFinal = "";
+                if (fotoFile) {
+                    const rutaStorage = `noticias/${Date.now()}_${fotoFile.name}`;
+                    const storageRef = ref(storage, rutaStorage);
+                    const snapshot = await uploadBytes(storageRef, fotoFile);
+                    urlFinal = await getDownloadURL(snapshot.ref);
+                }
+
+                await addDoc(collection(db, "noticias"), {
+                    titulo,
+                    contenido,
+                    ubicacion: ubicacion || "Malasia",
+                    categoria,
+                    imagenUrl: urlFinal,
+                    fecha: serverTimestamp()
+                });
+
+                alert("¡Noticia publicada con éxito!");
+                location.reload();
+            } catch (e) {
+                alert("Error al publicar: " + e.message);
+                btn.disabled = false;
+                btn.innerText = "Publicar en la Bitácora";
+            }
+        };
+
+        // --- 3. CARGA DE DATOS ---
+
         async function cargarDatos() {
             cargarLista("pendiente", "lista-pendientes");
             cargarLista("aprobado", "lista-aprobados");
@@ -219,47 +410,36 @@
 
         async function cargarLista(estado, elementId) {
             const contenedor = document.getElementById(elementId);
-            contenedor.innerHTML = "Actualizando...";
+            try {
+                const q = query(collection(db, "solicitudes"), where("estado", "==", estado));
+                const snap = await getDocs(q);
 
-            const q = query(collection(db, "solicitudes"), where("estado", "==", estado));
-            const snap = await getDocs(q);
-
-            contenedor.innerHTML = "";
-            if (snap.empty) {
-                contenedor.innerHTML = `<p style="color:#999">No hay registros en esta categoría.</p>`;
-                return;
-            }
-
-            snap.forEach(docSnap => {
-                const u = docSnap.data();
-                const div = document.createElement("div");
-                div.className = "card";
-
-                if (estado === "pendiente") {
-                    div.innerHTML = `
-                        <div class="info">
-                            <strong>${u.nombre}</strong>
-                            <span>${u.correo} | ${u.telefono}</span>
-                        </div>
-                        <button onclick="aprobar('${docSnap.id}', '${u.correo}', '${u.nombre}')">Aprobar Acceso</button>
-                    `;
-                } else {
-                    // SECCIÓN ACTUALIZADA: Ahora muestra correo y teléfono también en aprobados
-                    div.innerHTML = `
-                        <div class="info">
-                            <strong>${u.nombre}</strong>
-                            <span>${u.correo} | ${u.telefono}</span>
-                            <br>
-                            <small style="color: #999;">Aprobado el: ${u.fecha || 'Reciente'}</small>
-                        </div>
-                        <button class="btn-danger" onclick="eliminar('${docSnap.id}')">Revocar Acceso</button>
-                    `;
+                contenedor.innerHTML = "";
+                if (snap.empty) {
+                    contenedor.innerHTML = `<p style="color:#999; padding: 10px;">Sin registros.</p>`;
+                    return;
                 }
-                contenedor.appendChild(div);
-            });
+
+                snap.forEach(docSnap => {
+                    const u = docSnap.data();
+                    const div = document.createElement("div");
+                    div.className = "card";
+                    div.innerHTML = `
+                        <div class="info">
+                            <strong>${u.nombre}</strong><br>
+                            <small>${u.correo} | ${u.telefono}</small>
+                        </div>
+                        ${estado === 'pendiente'
+                            ? `<button onclick="aprobar('${docSnap.id}', '${u.correo}', '${u.nombre}')" style="width:auto;">Aprobar</button>`
+                            : `<button class="btn-danger" onclick="eliminar('${docSnap.id}')" style="width:auto;">Revocar</button>`}
+                    `;
+                    contenedor.appendChild(div);
+                });
+            } catch (e) {
+                console.error(e);
+            }
         }
 
-        // --- ACCIONES ---
         window.aprobar = async (id, correo, nombre) => {
             if (!confirm(`¿Aprobar a ${nombre}?`)) return;
             try {
@@ -270,34 +450,21 @@
                     to: correo,
                     message: {
                         subject: "🔑 Acceso Concedido - Luz en el Sudeste Asiático",
-                        html: `
-                        <div style="font-family: sans-serif; max-width: 500px; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
-                            <h2 style="color: #1B4332;">¡Hola ${nombre}!</h2>
-                            <p>Tu solicitud ha sido aprobada. Aquí tienes tu clave de temporada:</p>
-                            <div style="background: #f9f7f2; padding: 20px; text-align: center; border: 1px dashed #D4AF37;">
-                                <span style="font-size: 24px; font-weight: bold; letter-spacing: 4px; color: #1B4332;">${claveActual}</span>
-                            </div>
-                            <p style="font-size: 12px; color: #777; margin-top: 20px;">Este código es personal. Dios te bendiga.</p>
-                        </div>`
+                        html: `<h2>¡Hola ${nombre}!</h2><p>Tu solicitud ha sido aprobada. Clave: <strong>${claveActual}</strong></p>`
                     }
                 });
 
-                await updateDoc(doc(db, "solicitudes", id), {
-                    estado: "aprobado",
-                    fecha: new Date().toLocaleDateString()
-                });
-
+                await updateDoc(doc(db, "solicitudes", id), { estado: "aprobado", fecha: new Date().toLocaleDateString() });
                 cargarDatos();
-            } catch (e) { alert("Error: " + e.message); }
+            } catch (e) { alert("Error al aprobar: " + e.message); }
         };
 
         window.eliminar = async (id) => {
-            if (confirm("¿Seguro que deseas revocar el acceso y eliminar a este usuario de la lista?")) {
+            if (confirm("¿Eliminar acceso?")) {
                 await deleteDoc(doc(db, "solicitudes", id));
                 cargarDatos();
             }
         };
-
     </script>
 </body>
 

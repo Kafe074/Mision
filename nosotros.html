@@ -26,8 +26,9 @@
         </button>
 
         <nav id="nav-menu">
-            <a href="index.html">Inicio</a>
+            <a href="inicio.html">Inicio</a>
             <a href="nosotros.html">Nosotros</a>
+            <a href="noticias.html">Noticias</a>
             <a href="malasia.html">Malasia</a>
             <a href="https://www.purecharity.com/checkout/603636" target="_blank" class="btn-nav">Apoyar</a>
         </nav>
@@ -108,7 +109,7 @@
         const ahora = new Date().getTime();
         if (!session || ahora > parseInt(session)) {
             localStorage.removeItem("session_filio");
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         }
     })();
 

@@ -3,109 +3,149 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luz en el Sudeste Asiatico | Familia Cusilayme Muñasqui</title>
+    <title>Acceso Privado | Luz en el Sudeste Asiatico</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400&display=swap"
         rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="photos/favicon.png">
     <link rel="apple-touch-icon" href="photos/favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f9f7f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            border-top: 5px solid #D4AF37;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            color: #1B4332;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        button {
+            background: #1B4332;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #D4AF37;
+        }
+
+        .warning {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">
-            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+    <div class="login-box">
+        <div style="letter-spacing: 3px; color: #D4AF37; font-weight: bold; margin-bottom: 10px;">LUZ EN EL SUDESTE
+            ASIATICO</div>
+        <h2>Espacio Reservado</h2>
+        <p>Este sitio contiene información sensible sobre la misión en el SE Asia. Por seguridad, se requiere una clave
+            de acceso actualizada.</p>
+
+        <input type="password" id="passInput" placeholder="Contraseña de temporada">
+        <button onclick="validar()">Ingresar</button>
+
+        <p id="errorMsg" style="color: #c0392b; display: none; margin-top: 15px;">Clave incorrecta o caducada.</p>
+
+        <div style="margin-top: 20px; border-top: 1px solid #eee; pt: 20px;">
+            <p style="margin-bottom: 10px;">¿No tienes una clave?</p>
+            <button onclick="window.location.href='registro.html'"
+                style="background: transparent; color: #1B4332; border: 2px solid #1B4332; padding: 10px 20px;">
+                Solicitar Acceso
+            </button>
         </div>
 
-        <button class="menu-toggle" id="mobile-menu">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <nav id="nav-menu">
-            <a href="index.html">Inicio</a>
-            <a href="nosotros.html">Nosotros</a>
-            <a href="malasia.html">Malasia</a>
-            <a href="https://www.purecharity.com/checkout/603636" target="_blank" class="btn-nav">Apoyar</a>
-        </nav>
-    </header>
-
-    <section class="hero"
-        style="background-image: linear-gradient(rgba(8, 28, 21, 0.5), rgba(8, 28, 21, 0.3)), url('photos/las_ratas.jpeg');">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Una familia con un corazón para el Sudeste Asiático</h1>
-            <p>Acompaña a la familia Cusilayme Muñasqui en su misión de compartir esperanza en Malasia.</p>
-            <div class="hero-buttons">
-                <a href="nosotros.html" class="btn-primary">Nuestra Misión</a>
-                <a href="malasia.html" class="btn-secondary">Motivos de Oración</a>
-            </div>
+        <div class="warning" style="margin-top: 25px;">
+            Si ya solicitaste tu clave, revisa tu correo electrónico (bandeja de entrada o spam).
         </div>
-    </section>
+    </div>
 
-    <section class="quote-section">
-        <blockquote>
-            "No vamos solos; vamos como una familia enviada por Su gracia."
-            <span>— Familia Cusilayme Muñasqui</span>
-        </blockquote>
-        <img src="photos/aaaaaaaa.png" alt="Familia Cusilayme Muñasqui">
-    </section>
+    <script>
+        async function validar() {
+            // .trim() es vital para que no falle si el usuario pone un espacio al final
+            const pass = document.getElementById("passInput").value.trim();
+            const errorMsg = document.getElementById("errorMsg");
 
-    <section class="mission-video-section">
-        <div class="container">
-            <h2 class="section-subtitle">Nuestra Historia</h2>
+            async function hash(string) {
+                // Usamos TextEncoder, que es el estándar moderno para evitar errores de codificación
+                const msgUint8 = new TextEncoder().encode(string);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            }
 
-            <div class="verse-container">
-                <p class="bible-verse">
-                    "Pero recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en
-                    Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra."
-                </p>
-                <span class="verse-ref" style="font-size: 1rem;">Hechos 1:8</span>
-            </div>
+            const inputHash = await hash(pass);
 
-            <div class="video-wrapper">
-                <video controls poster="photos/LA DEFINITIVA.png">
-                    <source src="photos/Proyecto Sudeste Asiatico.mp4" type="video/mp4">
-                    Tu navegador no soporta el formato de video.
-                </video>
-            </div>
-        </div>
-    </section>
+            const clavesAutorizadas = [
+            /* PUBLIC_KEY */ "21dfc7ec77b7d3d7a54058609944f1652d1013ab4cfb3c9308ef6bf2a49e97fd"
+            ];
 
-    <footer class="mini-footer">
-        <p>© 2026 Familia Cusilayme Muñasqui | Luz en Malasia</p>
-    </footer>
-</body>
+            if (clavesAutorizadas.includes(inputHash)) {
+                const tiempoExpiracion = 20 * 60 * 1000;
+                const expira = new Date().getTime() + tiempoExpiracion;
 
-<script>
-    // 1. Control de Sesión
-    (function () {
-        const session = localStorage.getItem("session_filio");
-        const ahora = new Date().getTime();
-        if (!session || ahora > parseInt(session)) {
-            localStorage.removeItem("session_filio");
-            window.location.href = "login.html";
+                localStorage.setItem("session_filio", expira);
+                window.location.href = "inicio.html";
+            } else {
+                errorMsg.style.display = "block";
+                errorMsg.innerText = "Clave incorrecta o caducada.";
+            }
         }
-    })();
 
-    // 2. Control de Menú Móvil
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navMenu = document.getElementById('nav-menu');
-
-    if (mobileMenu && navMenu) { // Verificamos que existan para evitar errores
-        mobileMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const icon = mobileMenu.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
+        // Permitir entrar con la tecla "Enter"
+        document.getElementById("passInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                validar();
+            }
         });
-    }
-</script>
+    </script>
+</body>
 
 </html>
