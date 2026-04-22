@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avances de la Misión | Luz en Malasia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="photos/favicon.png">
+    <link rel="apple-touch-icon" href="photos/favicon.png">
+    
+    <style>
+        /* Estilos específicos para las tarjetas de noticias */
+        .news-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 70vh;
+        }
+
+        .news-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            border-left: 5px solid var(--dorado-luz);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--verde-selva);
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .news-content {
+            line-height: 1.8;
+            color: #444;
+            white-space: pre-wrap;
+            margin-top: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .news-img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            max-height: 450px;
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 80px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+        }
+
+        /* Ajuste para que el título de la página combine con el estilo general */
+        .page-title {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--verde-selva);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+        </div>
+
+        <button class="menu-toggle" id="mobile-menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav id="nav-menu">
+            <a href="inicio.html">Inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="noticias.html" class="active">Noticias</a>
+            <a href="malasia.html">Malasia</a>
+            <a href="https://www.purecharity.com/checkout/603636" target="_blank" class="btn-nav">Apoyar</a>
+        </nav>
+    </header>
+
+    <div class="news-container">
+        <h1 class="page-title">Bitácora de la Misión</h1>
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">Noticias y actualizaciones desde el campo misionero.</p>
+        
+        <div id="contenedor-noticias">
+            <p class="empty-state">Cargando noticias...</p>
+        </div>
+    </div>
+
+    <footer class="mini-footer">
+        <p>&copy; 2026 Familia Cusilayme Muñasqui | Luz en Malasia</p>
+    </footer>
+
+    <script>
+        // 1. Control de Sesión (Seguridad)
+        (function () {
+            const session = localStorage.getItem("session_filio");
+            const ahora = new Date().getTime();
+            if (!session || ahora > parseInt(session)) {
+                localStorage.removeItem("session_filio");
+                window.location.href = "index.html";
+            }
+        })();
+
+        // 2. Control de Menú Móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (mobileMenu && navMenu) {
+            mobileMenu.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                const icon = mobileMenu.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-xmark');
+            });
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // USAR TU CONFIGURACIÓN ACTUAL
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAHvLHGr4pXiXhiWhEJegW6nJUlWxiVfA",
+            authDomain: "sudesteasiatico-5a1d2.firebaseapp.com",
+            projectId: "sudesteasiatico-5a1d2",
+            storageBucket: "sudesteasiatico-5a1d2.firebasestorage.app",
+            messagingSenderId: "88193105907",
+            appId: "1:88193105907:web:ba8953331fec95abd6dc86"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function cargarNoticias() {
+            const container = document.getElementById("contenedor-noticias");
+            
+            try {
+                const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
+                const querySnapshot = await getDocs(q);
+
+                container.innerHTML = "";
+
+                if (querySnapshot.empty) {
+                    container.innerHTML = `<div class="empty-state">Próximamente compartiremos las maravillas que Dios está haciendo en Malasia.</div>`;
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    
+                    // Formatear la fecha correctamente
+                    const fecha = data.fecha ? data.fecha.toDate().toLocaleDateString('es-ES', { 
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    }) : "Reciente";
+
+                    const fotoHTML = data.imagenUrl ? `<img src="${data.imagenUrl}" alt="${data.titulo}" class="news-img">` : "";
+
+                    container.innerHTML += `
+                        <article class="news-card">
+                            <div class="news-date">${fecha}</div>
+                            ${fotoHTML}
+                            <h3>${data.titulo}</h3>
+                            <div class="news-content">${data.contenido}</div>
+                        </article>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error cargando noticias:", error);
+                container.innerHTML = `<p class="empty-state">Error al cargar las noticias. Intenta de nuevo más tarde.</p>`;
+            }
+        }
+
+        cargarNoticias();
+    </script>
+</body>
+</html>

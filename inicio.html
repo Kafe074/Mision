@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luz en el Sudeste Asiatico | Familia Cusilayme Muñasqui</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="photos/favicon.png">
+    <link rel="apple-touch-icon" href="photos/favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+        </div>
+
+        <button class="menu-toggle" id="mobile-menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav id="nav-menu">
+            <a href="inicio.html">Inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="malasia.html">Malasia</a>
+            <a href="https://www.purecharity.com/checkout/603636" target="_blank" class="btn-nav">Apoyar</a>
+        </nav>
+    </header>
+
+    <section class="hero"
+        style="background-image: linear-gradient(rgba(8, 28, 21, 0.5), rgba(8, 28, 21, 0.3)), url('photos/las_ratas.jpeg');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Una familia con un corazón para el Sudeste Asiático</h1>
+            <p>Acompaña a la familia Cusilayme Muñasqui en su misión de compartir esperanza en Malasia.</p>
+            <div class="hero-buttons">
+                <a href="nosotros.html" class="btn-primary">Nuestra Misión</a>
+                <a href="malasia.html" class="btn-secondary">Motivos de Oración</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <blockquote>
+            "No vamos solos; vamos como una familia enviada por Su gracia."
+            <span>— Familia Cusilayme Muñasqui</span>
+        </blockquote>
+        <img src="photos/aaaaaaaa.png" alt="Familia Cusilayme Muñasqui">
+    </section>
+
+    <section class="mission-video-section">
+        <div class="container">
+            <h2 class="section-subtitle">Nuestra Historia</h2>
+
+            <div class="verse-container">
+                <p class="bible-verse">
+                    "Pero recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en
+                    Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra."
+                </p>
+                <span class="verse-ref" style="font-size: 1rem;">Hechos 1:8</span>
+            </div>
+
+            <div class="video-wrapper">
+                <video controls poster="photos/LA DEFINITIVA.png">
+                    <source src="photos/Proyecto Sudeste Asiatico.mp4" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mini-footer">
+        <p>© 2026 Familia Cusilayme Muñasqui | Luz en Malasia</p>
+    </footer>
+</body>
+
+<script>
+    // 1. Control de Sesión
+    (function () {
+        const session = localStorage.getItem("session_filio");
+        const ahora = new Date().getTime();
+        if (!session || ahora > parseInt(session)) {
+            localStorage.removeItem("session_filio");
+            window.location.href = "index.html";
+        }
+    })();
+
+    // 2. Control de Menú Móvil
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (mobileMenu && navMenu) { // Verificamos que existan para evitar errores
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+    }
+</script>
+
+</html>
