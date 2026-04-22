@@ -42,6 +42,7 @@ for doc in solicitudes:
         # Crear el correo en Firestore
         db.collection('correos_enviados').add({
             'to': correo,
+            'from': 'Familiacusilayme@gmail.com', # <--- AGREGA ESTO (El verificado en Brevo)
             'message': {
                 'subject': "🔑 Nueva Clave de Acceso - Luz en el Sudeste Asiático",
                 'html': f"""

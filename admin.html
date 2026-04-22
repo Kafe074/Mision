@@ -244,10 +244,13 @@
                         <button onclick="aprobar('${docSnap.id}', '${u.correo}', '${u.nombre}')">Aprobar Acceso</button>
                     `;
                 } else {
+                    // SECCIÓN ACTUALIZADA: Ahora muestra correo y teléfono también en aprobados
                     div.innerHTML = `
                         <div class="info">
                             <strong>${u.nombre}</strong>
-                            <span>Aprobado el: ${u.fecha || 'Reciente'}</span>
+                            <span>${u.correo} | ${u.telefono}</span>
+                            <br>
+                            <small style="color: #999;">Aprobado el: ${u.fecha || 'Reciente'}</small>
                         </div>
                         <button class="btn-danger" onclick="eliminar('${docSnap.id}')">Revocar Acceso</button>
                     `;
