@@ -164,9 +164,9 @@
 
                 // 2. Notificar a Telegram
                 // Reemplaza los valores de abajo
-                const tokenEncoded = "ODYyNzc0OTc2ODpBQUVHektjVkhrc05rNGJVTE5TeU15SEptbUJzNmpjSnR1VQ=="; // <--- Tu token en base64 aquí
+                const botToken = "8627749768:AAEGzKcVHksNk4bULNSyMyHJmiBs6jcJtuU"; // <--- Tu token en base64 aquí
                 const chatId = "-5064269668";           // <--- Tu ID de chat aquí
-                
+
                 const mensaje = `📥 *NUEVA SOLICITUD DE ACCESO*\n\n👤 *Nombre:* ${nombre}\n📱 *WhatsApp:* ${telefono}\n📧 *Correo:* ${correo}\n\n⏳ _Estado: Pendiente_`;
 
                 fetch(`https://api.telegram.org/bot${d(tokenEncoded)}/sendMessage`, {
@@ -177,7 +177,16 @@
                         text: mensaje,
                         parse_mode: 'Markdown'
                     })
-                }).catch(err => console.error("Error Telegram:", err));     
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.ok) {
+                            console.error("Error de Telegram:", data.description);
+                        } else {
+                            console.log("✅ Telegram notificado con éxito");
+                        }
+                    })
+                    .catch(err => console.error("Error de red en Telegram:", err));
 
                 msgDiv.style.display = "block";
                 msgDiv.style.color = "green";
