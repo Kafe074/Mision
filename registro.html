@@ -169,7 +169,7 @@
 
                 const mensaje = `📥 *NUEVA SOLICITUD DE ACCESO*\n\n👤 *Nombre:* ${nombre}\n📱 *WhatsApp:* ${telefono}\n📧 *Correo:* ${correo}\n\n⏳ _Estado: Pendiente_`;
 
-                fetch(`https://api.telegram.org/bot${d(tokenEncoded)}/sendMessage`, {
+                fetch(`https://api.telegram.org/bot${d(botToken)}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
