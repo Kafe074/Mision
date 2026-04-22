@@ -136,9 +136,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Función para decodificar el token de forma simple
-        const d = (s) => window.atob(s);
-
         window.enviarSolicitud = async () => {
             const nombre = document.getElementById("regNombre").value;
             const telefono = document.getElementById("regTelefono").value;
