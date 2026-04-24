@@ -26,3 +26,25 @@ function controlCarrusel(btn, direccion) {
     const desplazamiento = -index * (100 / total);
     track.style.transform = `translateX(${desplazamiento}%)`;
 }
+
+ (function () {
+        const session = localStorage.getItem("session_filio");
+        const ahora = new Date().getTime();
+        if (!session || ahora > parseInt(session)) {
+            localStorage.removeItem("session_filio");
+            window.location.href = "index.html";
+        }
+    })();
+
+    // 2. Control de Menú Móvil
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (mobileMenu && navMenu) { // Verificamos que existan para evitar errores
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+    }

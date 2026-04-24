@@ -71,7 +71,8 @@
             </div>
 
             <div class="video-wrapper">
-                <video controls poster="photos/LA DEFINITIVA.png">
+                <video controls controlsList="nodownload" oncontextmenu="return false;"
+                    poster="photos/LA DEFINITIVA.png">
                     <source src="photos/Proyecto Sudeste Asiatico.mp4" type="video/mp4">
                     Tu navegador no soporta el formato de video.
                 </video>
@@ -84,27 +85,14 @@
     </footer>
 </body>
 
+<script src="script.js"></script>
 <script>
-    // 1. Control de Sesión
-    (function () {
-        const session = localStorage.getItem("session_filio");
-        const ahora = new Date().getTime();
-        if (!session || ahora > parseInt(session)) {
-            localStorage.removeItem("session_filio");
-            window.location.href = "index.html";
-        }
-    })();
 
-    // 2. Control de Menú Móvil
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navMenu = document.getElementById('nav-menu');
-
-    if (mobileMenu && navMenu) { // Verificamos que existan para evitar errores
-        mobileMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const icon = mobileMenu.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
+    // Deshabilitar clic derecho específicamente en el video
+    const video = document.querySelector('video');
+    if (video) {
+        video.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
         });
     }
 </script>

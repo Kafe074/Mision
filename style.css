@@ -851,4 +851,18 @@ blockquote span {
             margin: 5px 0;
         }
     }
+
+    /* Oculta el botón de descarga en navegadores basados en Chrome/Safari */
+    video::-internal-media-controls-download-button {
+        display: none;
+    }
+
+    video::-webkit-media-controls-enclosure {
+        overflow: hidden;
+    }
+
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 30px);
+        /* Desplaza el botón de descarga fuera del área visible */
+    }
 }

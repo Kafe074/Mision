@@ -157,28 +157,6 @@
 
 </body>
 
-<script>
-    // 1. Control de Sesión
-    (function () {
-        const session = localStorage.getItem("session_filio");
-        const ahora = new Date().getTime();
-        if (!session || ahora > parseInt(session)) {
-            localStorage.removeItem("session_filio");
-            window.location.href = "index.html";
-        }
-    })();
+<script src="script.js"></script>
 
-    // 2. Control de Menú Móvil
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navMenu = document.getElementById('nav-menu');
-
-    if (mobileMenu && navMenu) { // Verificamos que existan para evitar errores
-        mobileMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const icon = mobileMenu.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
-        });
-    }
-</script>
 </html>

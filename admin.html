@@ -17,6 +17,7 @@
             --dorado: #D4AF37;
             --crema: #f9f7f2;
             --blanco: #ffffff;
+            --rojo: #c0392b;
         }
 
         body {
@@ -25,6 +26,58 @@
             margin: 0;
             color: #333;
             padding: 20px;
+        }
+
+        /* --- MODAL PERSONALIZADO --- */
+        #custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-top: 5px solid var(--dorado);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* --- TOOLTIPS --- */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            z-index: 10;
         }
 
         /* Login Overlay */
@@ -77,7 +130,7 @@
             padding-right: 20px;
         }
 
-        /* Grid y Cards para Usuarios */
+        /* Grid y Cards */
         .grid {
             display: grid;
             gap: 20px;
@@ -94,7 +147,33 @@
             align-items: center;
         }
 
-        /* --- FORMULARIO DE NOTICIAS --- */
+        /* Historial Table */
+        .history-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            margin-top: 20px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            background: var(--verde);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .history-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Formulario */
         .form-noticia {
             background: var(--blanco);
             padding: 30px;
@@ -131,7 +210,7 @@
             border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
             box-sizing: border-box;
-            transition: border 0.3s;
+            transition: 0.3s;
         }
 
         input:focus,
@@ -141,7 +220,7 @@
         }
 
         textarea {
-            height: 150px;
+            height: 120px;
             resize: vertical;
         }
 
@@ -161,7 +240,7 @@
 
         #preview-img {
             max-width: 100%;
-            max-height: 200px;
+            max-height: 150px;
             border-radius: 8px;
             margin-top: 10px;
             display: none;
@@ -185,18 +264,21 @@
             transform: translateY(-2px);
         }
 
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
         .btn-danger {
-            background: #c0392b;
+            background: var(--rojo);
             width: auto;
         }
 
-        .btn-danger:hover {
-            background: #a93226;
+        .btn-action {
+            width: auto;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+            border-radius: 8px;
+        }
+
+        .btn-edit {
+            background: #2980b9;
         }
 
         @media (max-width: 600px) {
@@ -213,6 +295,17 @@
 </head>
 
 <body>
+
+    <div id="custom-modal">
+        <div class="modal-card">
+            <h2 id="modal-title" style="margin-top: 0;">Aviso</h2>
+            <p id="modal-text">Mensaje del sistema</p>
+            <div class="modal-btns">
+                <button id="modal-confirm-btn">Aceptar</button>
+                <button id="modal-cancel-btn" style="background: #999; display: none;">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
     <div id="login-overlay">
         <div class="login-card">
@@ -236,8 +329,10 @@
         </div>
         <h1>Gestión de la Misión</h1>
 
-        <h2 class="section-title"><i class="fas fa-paper-plane"></i> Nueva Publicación</h2>
+        <h2 class="section-title"><i class="fas fa-paper-plane"></i> <span id="form-action-title">Nueva
+                Publicación</span></h2>
         <div class="form-noticia">
+            <input type="hidden" id="edit-id">
             <div class="form-group">
                 <label>Título de la Noticia *</label>
                 <input type="text" id="noticiaTitulo" placeholder="Ej: Avances en la enseñanza...">
@@ -268,13 +363,30 @@
                 <label>Foto de la Misión</label>
                 <div class="file-input-wrapper" onclick="document.getElementById('noticiaFoto').click()">
                     <i class="fas fa-cloud-upload-alt" style="font-size: 1.5rem; color: #aaa;"></i>
-                    <p id="file-name">Haz clic para subir una imagen</p>
+                    <p id="file-name">Haz clic para subir o cambiar imagen</p>
                     <img id="preview-img">
                 </div>
                 <input type="file" id="noticiaFoto" accept="image/*" style="display: none;" onchange="previewFile()">
             </div>
 
-            <button onclick="publicarConFoto()" id="btnPublicar">Publicar en la Bitácora</button>
+            <button onclick="guardarNoticia()" id="btnPublicar">Publicar en la Bitácora</button>
+            <button onclick="cancelarEdicion()" id="btnCancelarEdicion"
+                style="background:#999; margin-top:10px; display:none;">Cancelar Edición</button>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-history"></i> Historial de Historias</h2>
+        <div class="history-container">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th style="text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-historias-body">
+                </tbody>
+            </table>
         </div>
 
         <h2 class="section-title"><i class="fas fa-user-clock"></i> Solicitudes Pendientes</h2>
@@ -286,7 +398,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
@@ -304,14 +416,31 @@
         const storage = getStorage(app);
         const auth = getAuth(app);
 
-        // --- 1. GESTIÓN DE SESIÓN REAL ---
+        // --- SISTEMA DE MODAL ---
+        window.customAlert = (titulo, texto, callback = null, confirmMode = false) => {
+            const modal = document.getElementById("custom-modal");
+            document.getElementById("modal-title").innerText = titulo;
+            document.getElementById("modal-text").innerText = texto;
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            const cancelBtn = document.getElementById("modal-cancel-btn");
 
-        // Observador de estado: Verifica si ya estabas logueado
+            modal.style.display = "flex";
+            cancelBtn.style.display = confirmMode ? "block" : "none";
+
+            confirmBtn.onclick = () => {
+                modal.style.display = "none";
+                if (callback) callback();
+            };
+            cancelBtn.onclick = () => { modal.style.display = "none"; };
+        };
+
+        // --- GESTIÓN DE SESIÓN ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById("login-overlay").style.display = "none";
                 document.getElementById("adminContent").style.display = "block";
                 cargarDatos();
+                cargarHistorial();
             } else {
                 document.getElementById("login-overlay").style.display = "flex";
                 document.getElementById("adminContent").style.display = "none";
@@ -321,47 +450,79 @@
         window.verificarAdmin = async () => {
             const email = document.getElementById("adminEmail").value.trim();
             const pass = document.getElementById("adminPass").value.trim();
-            const btn = document.getElementById("btnLogin");
-
-            if (!email || !pass) return alert("Ingresa correo y contraseña");
-
-            btn.disabled = true;
-            btn.innerText = "Verificando...";
-
+            if (!email || !pass) return customAlert("Error", "Ingresa credenciales");
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-                // El observador onAuthStateChanged se encargará de mostrar el contenido
-            } catch (e) {
-                console.error(e);
-                alert("Error: Usuario o contraseña incorrectos.");
-                btn.disabled = false;
-                btn.innerText = "Entrar al Panel";
-            }
+            } catch (e) { customAlert("Error", "Credenciales incorrectas"); }
         };
 
-        window.cerrarSesion = () => {
-            signOut(auth).then(() => location.reload());
-        };
+        window.cerrarSesion = () => signOut(auth).then(() => location.reload());
 
-        // --- 2. FUNCIONES DE PUBLICACIÓN ---
-
+        // --- FUNCIONES DE HISTORIAS ---
         window.previewFile = () => {
             const file = document.getElementById('noticiaFoto').files[0];
             const preview = document.getElementById('preview-img');
-            const fileName = document.getElementById('file-name');
-
             if (file) {
-                fileName.innerText = file.name;
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
-                }
+                };
                 reader.readAsDataURL(file);
             }
+        };
+
+        async function cargarHistorial() {
+            const tbody = document.getElementById("lista-historias-body");
+            tbody.innerHTML = "<tr><td colspan='3' style='text-align:center;'>Cargando historial...</td></tr>";
+            try {
+                const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
+                const snap = await getDocs(q);
+                tbody.innerHTML = "";
+                snap.forEach(docSnap => {
+                    const n = docSnap.data();
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><strong>${n.titulo}</strong></td>
+                        <td><span style="font-size:0.8rem; color:var(--verde-claro)">${n.categoria}</span></td>
+                        <td style="text-align: center;">
+                            <button class="btn-action btn-edit" data-tooltip="Editar historia" onclick="prepararEdicion('${docSnap.id}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-action btn-danger" data-tooltip="Borrar permanentemente" onclick="confirmarBorrado('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) { console.error(e); }
         }
 
-        window.publicarConFoto = async () => {
+        window.prepararEdicion = async (id) => {
+            const docRef = doc(db, "noticias", id);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                document.getElementById("edit-id").value = id;
+                document.getElementById("noticiaTitulo").value = data.titulo;
+                document.getElementById("noticiaUbicacion").value = data.ubicacion;
+                document.getElementById("noticiaCategoria").value = data.categoria;
+                document.getElementById("noticiaContenido").value = data.contenido;
+                document.getElementById("form-action-title").innerText = "Editando Historia";
+                document.getElementById("btnPublicar").innerText = "Guardar Cambios";
+                document.getElementById("btnCancelarEdicion").style.display = "block";
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        window.cancelarEdicion = () => {
+            document.getElementById("edit-id").value = "";
+            document.getElementById("noticiaTitulo").value = "";
+            document.getElementById("noticiaContenido").value = "";
+            document.getElementById("form-action-title").innerText = "Nueva Publicación";
+            document.getElementById("btnPublicar").innerText = "Publicar en la Bitácora";
+            document.getElementById("btnCancelarEdicion").style.display = "none";
+        };
+
+        window.guardarNoticia = async () => {
+            const id = document.getElementById("edit-id").value;
             const titulo = document.getElementById("noticiaTitulo").value;
             const contenido = document.getElementById("noticiaContenido").value;
             const ubicacion = document.getElementById("noticiaUbicacion").value;
@@ -369,10 +530,10 @@
             const fotoFile = document.getElementById("noticiaFoto").files[0];
             const btn = document.getElementById("btnPublicar");
 
-            if (!titulo || !contenido) return alert("Por favor, llena los campos obligatorios (*)");
+            if (!titulo || !contenido) return customAlert("Error", "Llena los campos obligatorios");
 
             btn.disabled = true;
-            btn.innerText = "Subiendo publicación...";
+            btn.innerText = "Procesando...";
 
             try {
                 let urlFinal = "";
@@ -383,26 +544,34 @@
                     urlFinal = await getDownloadURL(snapshot.ref);
                 }
 
-                await addDoc(collection(db, "noticias"), {
-                    titulo,
-                    contenido,
-                    ubicacion: ubicacion || "Malasia",
-                    categoria,
-                    imagenUrl: urlFinal,
+                const payload = {
+                    titulo, contenido, ubicacion: ubicacion || "Malasia", categoria,
                     fecha: serverTimestamp()
-                });
+                };
+                if (urlFinal) payload.imagenUrl = urlFinal;
 
-                alert("¡Noticia publicada con éxito!");
+                if (id) {
+                    await updateDoc(doc(db, "noticias", id), payload);
+                    customAlert("Éxito", "Historia actualizada");
+                } else {
+                    await addDoc(collection(db, "noticias"), payload);
+                    customAlert("Éxito", "Historia publicada");
+                }
                 location.reload();
             } catch (e) {
-                alert("Error al publicar: " + e.message);
+                customAlert("Error", e.message);
                 btn.disabled = false;
-                btn.innerText = "Publicar en la Bitácora";
             }
         };
 
-        // --- 3. CARGA DE DATOS ---
+        window.confirmarBorrado = (id) => {
+            customAlert("¿Eliminar?", "Esta acción no se puede deshacer.", async () => {
+                await deleteDoc(doc(db, "noticias", id));
+                cargarHistorial();
+            }, true);
+        };
 
+        // --- CARGA DE USUARIOS ---
         async function cargarDatos() {
             cargarLista("pendiente", "lista-pendientes");
             cargarLista("aprobado", "lista-aprobados");
@@ -413,58 +582,46 @@
             try {
                 const q = query(collection(db, "solicitudes"), where("estado", "==", estado));
                 const snap = await getDocs(q);
-
                 contenedor.innerHTML = "";
-                if (snap.empty) {
-                    contenedor.innerHTML = `<p style="color:#999; padding: 10px;">Sin registros.</p>`;
-                    return;
-                }
-
+                if (snap.empty) { contenedor.innerHTML = `<p style="color:#999; padding:10px;">Sin registros.</p>`; return; }
                 snap.forEach(docSnap => {
                     const u = docSnap.data();
                     const div = document.createElement("div");
                     div.className = "card";
                     div.innerHTML = `
-                        <div class="info">
-                            <strong>${u.nombre}</strong><br>
-                            <small>${u.correo} | ${u.telefono}</small>
-                        </div>
+                        <div class="info"><strong>${u.nombre}</strong><br><small>${u.correo}</small></div>
                         ${estado === 'pendiente'
                             ? `<button onclick="aprobar('${docSnap.id}', '${u.correo}', '${u.nombre}')" style="width:auto;">Aprobar</button>`
-                            : `<button class="btn-danger" onclick="eliminar('${docSnap.id}')" style="width:auto;">Revocar</button>`}
+                            : `<button class="btn-danger" onclick="eliminarUsuario('${docSnap.id}')">Revocar</button>`}
                     `;
                     contenedor.appendChild(div);
                 });
-            } catch (e) {
-                console.error(e);
-            }
+            } catch (e) { console.error(e); }
         }
 
         window.aprobar = async (id, correo, nombre) => {
-            if (!confirm(`¿Aprobar a ${nombre}?`)) return;
-            try {
+            customAlert("Confirmar", `¿Aprobar a ${nombre}?`, async () => {
                 const configSnap = await getDoc(doc(db, "config", "acceso"));
                 const claveActual = configSnap.data().clave_mensual;
-
                 await addDoc(collection(db, "correos_enviados"), {
                     to: correo,
                     message: {
-                        subject: "🔑 Acceso Concedido - Luz en el Sudeste Asiático",
-                        html: `<h2>¡Hola ${nombre}!</h2><p>Tu solicitud ha sido aprobada. Clave: <strong>${claveActual}</strong></p>`
+                        subject: "🔑 Acceso Concedido",
+                        html: `<p>Hola ${nombre}, tu clave es: <strong>${claveActual}</strong></p>`
                     }
                 });
-
                 await updateDoc(doc(db, "solicitudes", id), { estado: "aprobado", fecha: new Date().toLocaleDateString() });
                 cargarDatos();
-            } catch (e) { alert("Error al aprobar: " + e.message); }
+            }, true);
         };
 
-        window.eliminar = async (id) => {
-            if (confirm("¿Eliminar acceso?")) {
+        window.eliminarUsuario = (id) => {
+            customAlert("¿Eliminar?", "Se revocará el acceso.", async () => {
                 await deleteDoc(doc(db, "solicitudes", id));
                 cargarDatos();
-            }
+            }, true);
         };
+
     </script>
 </body>
 

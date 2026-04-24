@@ -5,44 +5,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avances de la Misión | Luz en Malasia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="photos/favicon.png">
-    <link rel="apple-touch-icon" href="photos/favicon.png">
-    
+
     <style>
-        /* Estilos específicos para las tarjetas de noticias */
         .news-container {
-            max-width: 800px;
+            max-width: 900px;
+            /* Un poco más ancho para el diseño lado a lado */
             margin: 40px auto;
             padding: 0 20px;
             min-height: 70vh;
         }
 
+        /* --- DISEÑO LADO A LADO --- */
         .news-card {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 40px;
             border-left: 5px solid var(--dorado-luz);
             transition: transform 0.3s ease;
+            display: flex;
+            /* Activa el diseño flexible */
+            gap: 25px;
+            /* Espacio entre imagen y texto */
+            align-items: flex-start;
         }
 
         .news-card:hover {
             transform: translateY(-5px);
         }
 
+        /* Contenedor de imagen a la izquierda */
+        .news-img-wrapper {
+            flex: 0 0 35%;
+            /* La imagen ocupa el 35% del ancho fijo */
+            max-width: 350px;
+        }
+
+        .news-img {
+            width: 100%;
+            height: 250px;
+            /* Altura fija para uniformidad */
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+            background: #f0f0f0;
+            /* Color de fondo mientras carga */
+        }
+
+        /* Contenedor de texto a la derecha */
+        .news-info {
+            flex: 1;
+            /* El texto toma el resto del espacio */
+        }
+
         .news-card h3 {
             font-family: 'Cormorant Garamond', serif;
             color: var(--verde-selva);
-            font-size: 2rem;
-            margin: 10px 0;
+            font-size: 1.8rem;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
         }
 
         .news-date {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #999;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -50,31 +82,52 @@
         }
 
         .news-content {
-            line-height: 1.8;
+            line-height: 1.6;
             color: #444;
             white-space: pre-wrap;
-            margin-top: 15px;
             font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
         }
 
-        .news-img {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            object-fit: cover;
-            max-height: 450px;
-            display: block;
+        /* --- EFECTO ESQUELETO (SKELETON) --- */
+        .skeleton {
+            background: #eee;
+            background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+            border-radius: 8px;
+            background-size: 200% 100%;
+            animation: 1.5s shine linear infinite;
         }
 
-        .empty-state {
-            text-align: center;
-            color: #666;
-            padding: 80px 20px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
+        @keyframes shine {
+            to {
+                background-position-x: -200%;
+            }
         }
 
-        /* Ajuste para que el título de la página combine con el estilo general */
+        .skeleton-card {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 25px;
+        }
+
+        /* Responsivo: En móviles vuelve a estar uno arriba del otro */
+        @media (max-width: 768px) {
+            .news-card {
+                flex-direction: column;
+            }
+
+            .news-img-wrapper {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .news-img {
+                height: auto;
+                max-height: 300px;
+            }
+        }
+
         .page-title {
             text-align: center;
             font-family: 'Cormorant Garamond', serif;
@@ -91,11 +144,9 @@
         <div class="logo">
             <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
         </div>
-
         <button class="menu-toggle" id="mobile-menu">
             <i class="fa-solid fa-bars"></i>
         </button>
-
         <nav id="nav-menu">
             <a href="inicio.html">Inicio</a>
             <a href="nosotros.html">Nosotros</a>
@@ -107,10 +158,18 @@
 
     <div class="news-container">
         <h1 class="page-title">Bitácora de la Misión</h1>
-        <p style="text-align: center; margin-bottom: 40px; color: #666;">Noticias y actualizaciones desde el campo misionero.</p>
-        
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">Noticias y actualizaciones desde el campo
+            misionero.</p>
+
         <div id="contenedor-noticias">
-            <p class="empty-state">Cargando noticias...</p>
+            <div class="skeleton-card">
+                <div class="skeleton" style="width: 35%; height: 200px;"></div>
+                <div style="flex: 1;">
+                    <div class="skeleton" style="width: 30%; height: 15px; margin-bottom: 15px;"></div>
+                    <div class="skeleton" style="width: 80%; height: 30px; margin-bottom: 15px;"></div>
+                    <div class="skeleton" style="width: 100%; height: 80px;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -118,36 +177,10 @@
         <p>&copy; 2026 Familia Cusilayme Muñasqui | Luz en Malasia</p>
     </footer>
 
-    <script>
-        // 1. Control de Sesión (Seguridad)
-        (function () {
-            const session = localStorage.getItem("session_filio");
-            const ahora = new Date().getTime();
-            if (!session || ahora > parseInt(session)) {
-                localStorage.removeItem("session_filio");
-                window.location.href = "index.html";
-            }
-        })();
-
-        // 2. Control de Menú Móvil
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
-
-        if (mobileMenu && navMenu) {
-            mobileMenu.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                const icon = mobileMenu.querySelector('i');
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-xmark');
-            });
-        }
-    </script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // USAR TU CONFIGURACIÓN ACTUAL
         const firebaseConfig = {
             apiKey: "AIzaSyCAHvLHGr4pXiXhiWhEJegW6nJUlWxiVfA",
             authDomain: "sudesteasiatico-5a1d2.firebaseapp.com",
@@ -162,7 +195,7 @@
 
         async function cargarNoticias() {
             const container = document.getElementById("contenedor-noticias");
-            
+
             try {
                 const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
                 const querySnapshot = await getDocs(q);
@@ -176,32 +209,36 @@
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    
-                    // Formatear la fecha correctamente
-                    const fecha = data.fecha ? data.fecha.toDate().toLocaleDateString('es-ES', { 
-                        day: 'numeric', 
-                        month: 'long', 
-                        year: 'numeric' 
+
+                    const fecha = data.fecha ? data.fecha.toDate().toLocaleDateString('es-ES', {
+                        day: 'numeric', month: 'long', year: 'numeric'
                     }) : "Reciente";
 
-                    const fotoHTML = data.imagenUrl ? `<img src="${data.imagenUrl}" alt="${data.titulo}" class="news-img">` : "";
+                    // Optimización: Lazy Loading nativo para imágenes
+                    const fotoHTML = data.imagenUrl ?
+                        `<div class="news-img-wrapper">
+                            <img src="${data.imagenUrl}" alt="${data.titulo}" class="news-img" loading="lazy">
+                         </div>` : "";
 
                     container.innerHTML += `
                         <article class="news-card">
-                            <div class="news-date">${fecha}</div>
                             ${fotoHTML}
-                            <h3>${data.titulo}</h3>
-                            <div class="news-content">${data.contenido}</div>
+                            <div class="news-info">
+                                <div class="news-date">${fecha}</div>
+                                <h3>${data.titulo}</h3>
+                                <div class="news-content">${data.contenido}</div>
+                            </div>
                         </article>
                     `;
                 });
             } catch (error) {
-                console.error("Error cargando noticias:", error);
-                container.innerHTML = `<p class="empty-state">Error al cargar las noticias. Intenta de nuevo más tarde.</p>`;
+                console.error("Error:", error);
+                container.innerHTML = `<p class="empty-state">Error al cargar las noticias.</p>`;
             }
         }
 
         cargarNoticias();
     </script>
 </body>
+
 </html>
