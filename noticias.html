@@ -135,15 +135,36 @@
             font-size: 3rem;
             margin-bottom: 10px;
         }
+
+        /* Quita el subrayado y mantiene el color original del logo */
+        .logo-link {
+            text-decoration: none;
+            color: inherit;
+            /* Hereda el color que ya definiste en .logo */
+            display: inline-block;
+        }
+
+        /* Opcional: un ligero efecto al pasar el ratón para que el usuario sepa que es un link */
+        .logo-link:hover .logo {
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .logo {
+            cursor: pointer;
+            /* Aquí van tus estilos actuales de .logo (font-family, size, etc.) */
+        }
     </style>
 </head>
 
 <body>
 
     <header>
-        <div class="logo">
-            <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
-        </div>
+        <a href="inicio.html" class="logo-link">
+            <div class="logo">
+                <span class="luz">LUZ</span> <span class="en-italic">en</span> MALASIA
+            </div>
+        </a>
         <button class="menu-toggle" id="mobile-menu">
             <i class="fa-solid fa-bars"></i>
         </button>
@@ -176,7 +197,7 @@
     <footer class="mini-footer">
         <p>&copy; 2026 Familia Cusilayme Muñasqui | Luz en Malasia</p>
     </footer>
-
+    <script src="script.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";

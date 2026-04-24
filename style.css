@@ -866,3 +866,22 @@ blockquote span {
         /* Desplaza el botón de descarga fuera del área visible */
     }
 }
+
+/* Quita el subrayado y mantiene el color original del logo */
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    /* Hereda el color que ya definiste en .logo */
+    display: inline-block;
+}
+
+/* Opcional: un ligero efecto al pasar el ratón para que el usuario sepa que es un link */
+.logo-link:hover .logo {
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.logo {
+    cursor: pointer;
+    /* Aquí van tus estilos actuales de .logo (font-family, size, etc.) */
+}
