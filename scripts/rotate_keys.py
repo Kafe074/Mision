@@ -79,14 +79,14 @@ mensaje_final = (
 url = f"https://api.telegram.org/bot{token}/sendMessage"
 requests.post(url, data={'chat_id': chat_id, 'text': mensaje_final, 'parse_mode': 'Markdown'})
 
-# 3. Actualizar login.html
-with open('login.html', 'r', encoding='utf-8') as f:
+# 3. Actualizar index.html
+with open('index.html', 'r', encoding='utf-8') as f:
     content = f.read()
 
 pattern = r'/\* PUBLIC_KEY \*/ "(.*?)"'
 new_content = re.sub(pattern, f'/* PUBLIC_KEY */ "{new_hash}"', content)
 
-with open('login.html', 'w', encoding='utf-8') as f:
+with open('index.html', 'w', encoding='utf-8') as f:
     f.write(new_content)
 
 print("✅ Proceso completo: Telegram, Firebase y HTML sincronizados.")
